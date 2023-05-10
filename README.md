@@ -1,1 +1,1 @@
-# ELife-Admin
+# This is ELife administration application
