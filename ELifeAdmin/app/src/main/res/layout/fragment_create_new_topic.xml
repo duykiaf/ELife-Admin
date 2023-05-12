@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.CreateNewTopicFragment">
+
+        <include
+            android:id="@+id/appBarFragment"
+            layout="@layout/fragment_app_bar" />
+
+        <EditText
+            android:id="@+id/nameEdt"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+            android:layout_marginTop="@dimen/layout_margin_vertical"
+            android:background="@drawable/card_background"
+            android:fontFamily="@font/ubuntu_regular"
+            android:hint="@string/name"
+            android:imeOptions="actionDone"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/layout_margin_horizontal"
+            android:textColor="@color/black"
+            android:textColorHint="@color/primaryColor"
+            android:textSize="@dimen/heading_4" />
+
+        <ImageView
+            android:layout_width="@dimen/image_view_height"
+            android:layout_height="@dimen/image_view_height"
+            android:layout_marginStart="@dimen/layout_margin_horizontal"
+            android:layout_marginTop="@dimen/layout_margin_vertical"
+            android:background="@drawable/card_background"
+            android:src="@drawable/ic_image" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layout_margin_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/click_to_add_image" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+            android:layout_marginTop="@dimen/layout_margin_vertical"
+            android:background="@drawable/card_background"
+            android:hint="@string/select_category"
+            android:textColorHint="@color/primaryColor"
+            app:endIconTint="@color/primaryColor">
+
+            <AutoCompleteTextView
+                android:id="@+id/categoryCompleteTxt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edt_height"
+                android:background="@drawable/card_background"
+                android:inputType="none"
+                android:textSize="@dimen/heading_4" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edt_height"
+            android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+            android:layout_marginTop="@dimen/layout_margin_vertical"
+            android:background="@drawable/card_background"
+            android:hint="@string/select_status"
+            android:textColorHint="@color/primaryColor"
+            android:visibility="gone"
+            app:endIconTint="@color/primaryColor">
+
+            <AutoCompleteTextView
+                android:id="@+id/statusCompleteTxt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edt_height"
+                android:background="@drawable/card_background"
+                android:inputType="none"
+                android:textSize="@dimen/heading_4" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/large_btn"
+            android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+            android:layout_marginTop="@dimen/layout_margin_vertical"
+            android:background="@drawable/button_background"
+            android:fontFamily="@font/ubuntu_bold"
+            android:includeFontPadding="false"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/heading_3" />
+
+    </LinearLayout>
+</layout>

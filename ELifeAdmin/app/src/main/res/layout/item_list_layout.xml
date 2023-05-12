@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/edt_height"
+    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+    android:layout_marginTop="@dimen/layout_margin_vertical"
+    android:background="@drawable/card_background"
+    android:paddingHorizontal="@dimen/layout_margin_horizontal">
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ubuntu_bold"
+        android:includeFontPadding="false"
+        android:text="@string/item_name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/heading_4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/viewIcon"
+        android:layout_width="@dimen/ic_width"
+        android:layout_height="@dimen/ic_height"
+        android:layout_marginEnd="@dimen/layout_margin_horizontal"
+        android:src="@drawable/ic_eye"
+        app:layout_constraintBottom_toBottomOf="@id/itemName"
+        app:layout_constraintEnd_toStartOf="@id/editIcon"
+        app:layout_constraintTop_toTopOf="@id/itemName"
+        app:tint="@color/primaryColor" />
+
+    <ImageView
+        android:id="@+id/editIcon"
+        android:layout_width="@dimen/ic_width"
+        android:layout_height="@dimen/ic_height"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="@id/itemName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/itemName"
+        app:tint="@color/primaryColor" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

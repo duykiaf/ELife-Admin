@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.CreateNewAudioFragment">
+
+        <include
+            android:id="@+id/appBarFragment"
+            layout="@layout/fragment_app_bar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/nameEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edt_height"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:background="@drawable/card_background"
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:hint="@string/name"
+                    android:imeOptions="actionDone"
+                    android:includeFontPadding="false"
+                    android:inputType="text"
+                    android:paddingHorizontal="@dimen/layout_margin_horizontal"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="@dimen/heading_4" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/uploadAudioBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:background="@drawable/button_background"
+                    android:text="@string/upload_file"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading_4" />
+
+                <EditText
+                    android:id="@+id/lyricsEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:background="@drawable/card_background"
+                    android:fontFamily="@font/ubuntu_regular"
+                    android:gravity="start"
+                    android:hint="@string/lyrics"
+                    android:imeOptions="actionDone"
+                    android:includeFontPadding="false"
+                    android:inputType="textMultiLine"
+                    android:paddingHorizontal="@dimen/layout_margin_horizontal"
+                    android:paddingTop="@dimen/layout_margin_horizontal"
+                    android:scrollbarStyle="insideOverlay"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/primaryColor"
+                    android:textSize="@dimen/heading_4" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/colorsRcv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    tools:listitem="@layout/color_item_layout" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/boldBtn"
+                        android:layout_width="@dimen/style_btn"
+                        android:layout_height="@dimen/style_btn"
+                        android:layout_marginEnd="@dimen/layout_margin_horizontal"
+                        android:background="@drawable/card_background"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/b"
+                        android:textSize="@dimen/heading_4" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/italicBtn"
+                        android:layout_width="@dimen/style_btn"
+                        android:layout_height="@dimen/style_btn"
+                        android:layout_marginEnd="@dimen/layout_margin_horizontal"
+                        android:background="@drawable/card_background"
+                        android:fontFamily="@font/ubuntu_regular"
+                        android:includeFontPadding="false"
+                        android:text="@string/i"
+                        android:textSize="@dimen/heading_4"
+                        android:textStyle="italic" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/underlineBtn"
+                        android:layout_width="@dimen/style_btn"
+                        android:layout_height="@dimen/style_btn"
+                        android:layout_marginEnd="@dimen/layout_margin_horizontal"
+                        android:background="@drawable/card_background"
+                        android:fontFamily="@font/ubuntu_regular"
+                        android:includeFontPadding="false"
+                        android:text="@string/u"
+                        android:textSize="@dimen/heading_4" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edt_height"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:background="@drawable/card_background"
+                    android:hint="@string/select_topic"
+                    android:textColorHint="@color/primaryColor"
+                    app:endIconTint="@color/primaryColor">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/topicCompleteTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edt_height"
+                        android:background="@drawable/card_background"
+                        android:inputType="none"
+                        android:textSize="@dimen/heading_4" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edt_height"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:background="@drawable/card_background"
+                    android:hint="@string/select_status"
+                    android:textColorHint="@color/primaryColor"
+                    android:visibility="gone"
+                    app:endIconTint="@color/primaryColor">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/statusCompleteTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edt_height"
+                        android:background="@drawable/card_background"
+                        android:inputType="none"
+                        android:textSize="@dimen/heading_4" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/saveBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/large_btn"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginVertical="@dimen/layout_margin_vertical"
+                    android:background="@drawable/button_background"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/save"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading_3" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>
