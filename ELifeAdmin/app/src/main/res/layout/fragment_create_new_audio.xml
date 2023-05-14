@@ -99,6 +99,7 @@
                         android:fontFamily="@font/ubuntu_bold"
                         android:includeFontPadding="false"
                         android:text="@string/b"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/heading_4" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -110,6 +111,7 @@
                         android:fontFamily="@font/ubuntu_regular"
                         android:includeFontPadding="false"
                         android:text="@string/i"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/heading_4"
                         android:textStyle="italic" />
 
@@ -122,6 +124,7 @@
                         android:fontFamily="@font/ubuntu_regular"
                         android:includeFontPadding="false"
                         android:text="@string/u"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/heading_4" />
                 </LinearLayout>
 
