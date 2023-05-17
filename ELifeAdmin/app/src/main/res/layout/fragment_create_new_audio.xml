@@ -43,17 +43,22 @@
                     android:textColorHint="@color/primaryColor"
                     android:textSize="@dimen/heading_4" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <ImageView
                     android:id="@+id/uploadAudioBtn"
+                    android:layout_width="@dimen/large_btn"
+                    android:layout_height="@dimen/large_btn"
+                    android:layout_marginStart="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="@dimen/image_btn_padding"
+                    android:src="@drawable/ic_audio_file" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
-                    android:layout_marginTop="@dimen/layout_margin_vertical"
-                    android:background="@drawable/button_background"
-                    android:text="@string/upload_file"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/heading_4" />
+                    android:layout_marginStart="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/click_to_add_audio" />
 
                 <EditText
                     android:id="@+id/lyricsEdt"
