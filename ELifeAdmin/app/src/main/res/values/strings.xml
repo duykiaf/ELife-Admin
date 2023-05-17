@@ -35,6 +35,7 @@
     <string name="logout">Logout</string>
     <string name="item_name">Item name</string>
     <string name="click_to_add_image">(Click to add image)</string>
+    <string name="click_to_add_audio">(Click to add audio)</string>
     <string name="select_topic">Select topic</string>
     <string name="b">B</string>
     <string name="i">I</string>

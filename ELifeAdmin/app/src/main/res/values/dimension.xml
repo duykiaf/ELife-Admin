@@ -10,8 +10,10 @@
     <dimen name="layout_margin_horizontal">16dp</dimen>
     <dimen name="radius">15dp</dimen>
     <dimen name="edt_height">86dp</dimen>
-    <dimen name="image_view_height">96dp</dimen>
+    <dimen name="image_btn_padding">15dp</dimen>
     <dimen name="large_btn">70dp</dimen>
     <dimen name="elevation">10dp</dimen>
     <dimen name="style_btn">50dp</dimen>
+    <dimen name="add_btn_padding">10dp</dimen>
+    <dimen name="margin_bottom">45dp</dimen>
 </resources>
