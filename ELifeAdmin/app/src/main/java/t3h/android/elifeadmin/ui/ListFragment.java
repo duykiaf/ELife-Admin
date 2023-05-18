@@ -18,7 +18,6 @@ import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.databinding.FragmentListBinding;
 
 public class ListFragment extends Fragment {
-    public static final String ARG_OBJECT = "object";
     private FragmentListBinding fragmentListBinding;
 
     @Override
@@ -34,22 +33,5 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle args = getArguments();
-        fragmentListBinding.addNewBtn.setContentDescription(args.getString(ARG_OBJECT, "Add new"));
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        String getBtnContentDescription = fragmentListBinding.addNewBtn.getContentDescription().toString();
-        fragmentListBinding.addNewBtn.setOnClickListener(v -> {
-            switch (getBtnContentDescription) {
-                case "New category":
-                    navController.navigate(R.id.action_dashboardFragment_to_createNewCategoryFragment);
-                    break;
-                case "New topic":
-                    navController.navigate(R.id.action_dashboardFragment_to_createNewTopicFragment);
-                    break;
-                case "New audio":
-                    navController.navigate(R.id.action_dashboardFragment_to_createNewAudioFragment);
-                    break;
-            }
-        });
     }
 }
