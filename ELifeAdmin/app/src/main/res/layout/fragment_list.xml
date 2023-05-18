@@ -22,20 +22,5 @@
             tools:ignore="MissingConstraints"
             tools:listitem="@layout/item_list_layout" />
 
-        <ImageView
-            android:id="@+id/addNewBtn"
-            android:layout_width="@dimen/large_btn"
-            android:layout_height="@dimen/large_btn"
-            android:layout_marginEnd="@dimen/layout_margin_horizontal"
-            android:layout_marginBottom="@dimen/layout_margin_vertical"
-            android:background="@drawable/add_btn_background"
-            android:contentDescription="@string/add_new"
-            android:padding="@dimen/add_btn_padding"
-            android:src="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white"
-            tools:ignore="MissingConstraints" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
