@@ -21,16 +21,6 @@ public class DashboardAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         // Return a NEW fragment instance in createFragment(int)
         Fragment fragment = new ListFragment();
-
-        List<String> btnTxtList = new ArrayList<>();
-        btnTxtList.add("New category");
-        btnTxtList.add("New topic");
-        btnTxtList.add("New audio");
-
-        Bundle args = new Bundle();
-        args.putString(ListFragment.ARG_OBJECT, btnTxtList.get(position));
-
-        fragment.setArguments(args);
         return fragment;
     }
 
