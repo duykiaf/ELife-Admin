@@ -3,14 +3,6 @@ package t3h.android.elifeadmin.ui;
 import android.annotation.SuppressLint;
 import android.graphics.Paint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,8 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.adapters.ColorsAdapter;
+import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentCreateNewAudioBinding;
 
 public class CreateNewAudioFragment extends Fragment {
@@ -35,7 +34,7 @@ public class CreateNewAudioFragment extends Fragment {
 
         View view = binding.getRoot();
 
-        binding.appBarFragment.topAppBar.setTitle("Create new audio");
+        binding.appBarFragment.topAppBar.setTitle(AppConstant.CREATE_NEW_AUDIO);
         binding.appBarFragment.topAppBar.setNavigationIcon(R.drawable.ic_back);
 
         int[] colors = getResources().getIntArray(R.array.colorsStyle);

@@ -16,11 +16,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import t3h.android.elifeadmin.R;
+import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentCreateNewTopicBinding;
 
 public class CreateNewTopicFragment extends Fragment {
     private FragmentCreateNewTopicBinding binding;
-    private String[] status = getResources().getStringArray(R.array.status);
+    private String[] status;
     private String[] categories = {"Category 1", "Category 2", "Category 3", "Category 4"};
     private ArrayAdapter<String> statusAdapterItems, categoryAdapterItems;
 
@@ -32,8 +33,10 @@ public class CreateNewTopicFragment extends Fragment {
 
         View view = binding.getRoot();
 
-        binding.appBarFragment.topAppBar.setTitle("Create new topic");
+        binding.appBarFragment.topAppBar.setTitle(AppConstant.CREATE_NEW_TOPIC);
         binding.appBarFragment.topAppBar.setNavigationIcon(R.drawable.ic_back);
+
+        status = getResources().getStringArray(R.array.status);
 
         return view;
     }

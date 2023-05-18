@@ -15,11 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import t3h.android.elifeadmin.R;
+import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentCreateNewCategoryBinding;
 
 public class CreateNewCategoryFragment extends Fragment {
     private FragmentCreateNewCategoryBinding binding;
-    private String[] items = getResources().getStringArray(R.array.status);
+    private String[] items;
     private ArrayAdapter<String> adapterItems;
 
     @Override
@@ -30,8 +31,10 @@ public class CreateNewCategoryFragment extends Fragment {
 
         View view = binding.getRoot();
 
-        binding.appBarFragment.topAppBar.setTitle("Create new category");
+        binding.appBarFragment.topAppBar.setTitle(AppConstant.CREATE_NEW_CATEGORY);
         binding.appBarFragment.topAppBar.setNavigationIcon(R.drawable.ic_back);
+
+        items = getResources().getStringArray(R.array.status);
 
         return view;
     }
