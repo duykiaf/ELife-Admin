@@ -103,4 +103,10 @@ public class DashboardFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dashboardBinding = null;
+    }
 }

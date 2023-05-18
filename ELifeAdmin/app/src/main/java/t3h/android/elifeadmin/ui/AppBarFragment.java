@@ -32,4 +32,10 @@ public class AppBarFragment extends Fragment {
         appBarBinding.topAppBar.setTitle(args.getString("PAGE_TITLE", "No page found"));
         appBarBinding.topAppBar.setNavigationIcon(args.getInt("PAGE_ICON"));
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        appBarBinding = null;
+    }
 }

@@ -84,4 +84,10 @@ public class CreateNewAudioFragment extends Fragment {
             Toast.makeText(requireActivity(), getStatus, Toast.LENGTH_SHORT).show();
         });
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 }
