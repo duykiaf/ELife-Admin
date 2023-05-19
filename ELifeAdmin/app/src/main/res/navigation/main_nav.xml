@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_createNewAudioFragment"
             app:destination="@id/createNewAudioFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
 
     <fragment
@@ -38,4 +41,9 @@
         android:name="t3h.android.elifeadmin.ui.CreateNewAudioFragment"
         android:label="CreateNewAudioFragment"
         tools:layout="@layout/fragment_create_new_audio" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="t3h.android.elifeadmin.ui.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
 </navigation>
