@@ -62,7 +62,11 @@
         android:id="@+id/signInFragment"
         android:name="t3h.android.elifeadmin.ui.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="t3h.android.elifeadmin.ui.ForgotPasswordFragment"
