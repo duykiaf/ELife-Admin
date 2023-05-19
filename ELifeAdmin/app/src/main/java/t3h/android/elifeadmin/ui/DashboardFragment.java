@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -101,6 +102,24 @@ public class DashboardFragment extends Fragment {
             } else {
                 dashboardBinding.searchEdt.setVisibility(View.VISIBLE);
             }
+        });
+
+        if (!dashboardBinding.appBarFragment.topAppBar.getTitle().equals(AppConstant.DASHBOARD)) {
+            dashboardBinding.appBarFragment.topAppBar.setNavigationOnClickListener(v -> {
+                requireActivity().onBackPressed();
+            });
+        }
+
+        dashboardBinding.appBarFragment.topAppBar.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.changePasswordItem:
+                    navController.navigate(R.id.action_dashboardFragment_to_changePasswordFragment);
+                    return true;
+                case R.id.logoutItem:
+                    Toast.makeText(requireActivity(), "Logout!", Toast.LENGTH_SHORT).show();
+                    return true;
+            }
+            return false;
         });
     }
 

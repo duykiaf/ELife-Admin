@@ -1,19 +1,18 @@
 package t3h.android.elifeadmin.ui;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.constant.AppConstant;
@@ -56,6 +55,25 @@ public class CreateNewTopicFragment extends Fragment {
         binding.statusCompleteTxt.setOnItemClickListener((adapterView, view12, i, l) -> {
             String getStatus = adapterView.getItemAtPosition(i).toString();
             Toast.makeText(requireActivity(), getStatus, Toast.LENGTH_SHORT).show();
+        });
+
+        if (!binding.appBarFragment.topAppBar.getTitle().equals(AppConstant.DASHBOARD)) {
+            binding.appBarFragment.topAppBar.setNavigationOnClickListener(v -> {
+                requireActivity().onBackPressed();
+            });
+        }
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        binding.appBarFragment.topAppBar.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.changePasswordItem:
+                    navController.navigate(R.id.action_createNewTopicFragment_to_changePasswordFragment);
+                    return true;
+                case R.id.logoutItem:
+                    Toast.makeText(requireActivity(), "Logout!", Toast.LENGTH_SHORT).show();
+                    return true;
+            }
+            return false;
         });
     }
 

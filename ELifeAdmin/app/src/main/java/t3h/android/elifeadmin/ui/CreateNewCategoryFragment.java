@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,25 @@ public class CreateNewCategoryFragment extends Fragment {
                 String item = adapterView.getItemAtPosition(i).toString();
                 Toast.makeText(requireActivity(), item, Toast.LENGTH_SHORT).show();
             }
+        });
+
+        if (!binding.appBarFragment.topAppBar.getTitle().equals(AppConstant.DASHBOARD)) {
+            binding.appBarFragment.topAppBar.setNavigationOnClickListener(v -> {
+                requireActivity().onBackPressed();
+            });
+        }
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        binding.appBarFragment.topAppBar.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.changePasswordItem:
+                    navController.navigate(R.id.action_createNewCategoryFragment_to_changePasswordFragment);
+                    return true;
+                case R.id.logoutItem:
+                    Toast.makeText(requireActivity(), "Logout!", Toast.LENGTH_SHORT).show();
+                    return true;
+            }
+            return false;
         });
     }
 
