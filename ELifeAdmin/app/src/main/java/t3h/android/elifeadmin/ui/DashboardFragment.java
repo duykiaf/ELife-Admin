@@ -21,6 +21,7 @@ import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.adapters.DashboardAdapter;
 import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentDashboardBinding;
+import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
 
 public class DashboardFragment extends Fragment {
     private String[] tabLayoutNames;
@@ -116,7 +117,8 @@ public class DashboardFragment extends Fragment {
                     navController.navigate(R.id.action_dashboardFragment_to_changePasswordFragment);
                     return true;
                 case R.id.logoutItem:
-                    Toast.makeText(requireActivity(), "Logout!", Toast.LENGTH_SHORT).show();
+                    FirebaseAuthHelper.signOut();
+                    navController.navigate(R.id.signInFragment);
                     return true;
             }
             return false;
