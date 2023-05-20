@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -70,18 +71,40 @@
             android:textColorHint="@color/primaryColor"
             android:textSize="@dimen/heading_4" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.cardview.widget.CardView
             android:id="@+id/signInBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/normal_btn"
             android:layout_marginTop="@dimen/layout_margin_vertical"
-            android:background="@drawable/button_background"
-            android:fontFamily="@font/ubuntu_bold"
-            android:includeFontPadding="false"
-            android:text="@string/sign_in"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/heading_3" />
+            app:cardBackgroundColor="@color/primaryColor"
+            app:cardCornerRadius="@dimen/radius">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="@dimen/ic_width"
+                    android:layout_height="@dimen/ic_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/layout_margin_horizontal"
+                    android:layout_toLeftOf="@id/signInText"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/signInText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading_3" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/forgotPwdTxt"
