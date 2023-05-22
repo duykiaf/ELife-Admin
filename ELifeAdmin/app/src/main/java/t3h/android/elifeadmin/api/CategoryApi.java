@@ -1,2 +1,4 @@
-package t3h.android.elifeadmin.api;public interface CategoryApi {
+package t3h.android.elifeadmin.api;
+
+public interface CategoryApi {
 }

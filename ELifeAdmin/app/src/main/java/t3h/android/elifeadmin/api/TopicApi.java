@@ -1,2 +1,4 @@
-package t3h.android.elifeadmin.api;public interface TopicApi {
+package t3h.android.elifeadmin.api;
+
+public interface TopicApi {
 }
