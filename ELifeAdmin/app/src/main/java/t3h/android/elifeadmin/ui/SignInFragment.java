@@ -8,9 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,13 @@ import android.widget.Toast;
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.databinding.FragmentSignInBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
+import t3h.android.elifeadmin.models.Account;
+import t3h.android.elifeadmin.models.Token;
+import t3h.android.elifeadmin.viewmodels.TokenViewModel;
 
 public class SignInFragment extends Fragment {
     private FragmentSignInBinding binding;
+    private TokenViewModel tokenViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,9 +41,7 @@ public class SignInFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        binding.forgotPwdTxt.setOnClickListener(v -> {
-            navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment);
-        });
+        binding.forgotPwdTxt.setOnClickListener(v -> navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment));
 
         binding.signInBtn.setOnClickListener(v -> {
             String email = binding.emailEdt.getText().toString().trim();
@@ -53,6 +57,10 @@ public class SignInFragment extends Fragment {
                     binding.progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         Toast.makeText(requireActivity(), "Sign in successfully!", Toast.LENGTH_SHORT).show();
+                        tokenViewModel = new ViewModelProvider(requireActivity()).get(TokenViewModel.class);
+                        Token token = tokenViewModel.createToken(new Account(email, password));
+                        Log.d("accessToken", String.valueOf(token.getAccessToken()));
+                        Log.d("refreshToken", String.valueOf(token.getRefreshToken()));
                         navController.navigate(R.id.dashboardFragment);
                     } else {
                         Toast.makeText(requireActivity(), "Sign in failed. Please try again!", Toast.LENGTH_LONG).show();
