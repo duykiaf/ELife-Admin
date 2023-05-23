@@ -1,8 +1,15 @@
 package t3h.android.elifeadmin.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,21 +19,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.databinding.FragmentSignInBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
+import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
 import t3h.android.elifeadmin.models.Account;
 import t3h.android.elifeadmin.viewmodels.TokenViewModel;
 
 public class SignInFragment extends Fragment {
     private FragmentSignInBinding binding;
     private TokenViewModel tokenViewModel;
+    private SharedPreferences sharedPref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,11 +58,13 @@ public class SignInFragment extends Fragment {
                 FirebaseAuthHelper.signIn(email, password, task -> {
                     binding.progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        Toast.makeText(requireActivity(), "Sign in successfully!", Toast.LENGTH_SHORT).show();
+                        sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
                         tokenViewModel = new ViewModelProvider(requireActivity()).get(TokenViewModel.class);
                         tokenViewModel.createToken(new Account(email, password)).observe(requireActivity(), token -> {
-                            Log.d("accessToken", String.valueOf(token.getAccessToken()));
-                            Log.d("refreshToken", String.valueOf(token.getRefreshToken()));
+                            if (!token.getAccessToken().trim().isEmpty()) {
+                                SharedPreferencesHelper.saveToken(sharedPref, token);
+                            }
+                            Log.d("message", token.getMessage());
                         });
                         navController.navigate(R.id.dashboardFragment);
                     } else {
