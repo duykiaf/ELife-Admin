@@ -5,7 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiProvider {
-    public static final String BASE_URL = "http://localhost:3000";
+    public static final String BASE_URL = "http://192.168.1.9:3000";
     private static TokenApi tokenApi;
     private static CategoryApi categoryApi;
     private static TopicApi topicApi;
