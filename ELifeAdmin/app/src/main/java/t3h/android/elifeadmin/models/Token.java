@@ -12,6 +12,10 @@ public class Token {
     @Expose
     private String refreshToken;
 
+    @SerializedName("message")
+    @Expose
+    private String message;
+
     public String getAccessToken() {
         return accessToken;
     }
@@ -26,5 +30,13 @@ public class Token {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
