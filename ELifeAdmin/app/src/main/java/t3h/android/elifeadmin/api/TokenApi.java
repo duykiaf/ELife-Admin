@@ -11,5 +11,5 @@ public interface TokenApi {
     Call<Token> createToken(@Body Account account);
 
     @POST("/refresh_token")
-    Call<Token> refreshToken();
+    Call<Token> refreshToken(@Body Token token);
 }
