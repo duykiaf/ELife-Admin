@@ -1,5 +1,6 @@
 package t3h.android.elifeadmin.viewmodels;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import t3h.android.elifeadmin.models.Account;
@@ -13,7 +14,7 @@ public class TokenViewModel extends ViewModel {
         tokenRepo = new TokenRepository();
     }
 
-    public Token createToken(Account account) {
+    public LiveData<Token> createToken(Account account) {
         return tokenRepo.createToken(account);
     }
 }

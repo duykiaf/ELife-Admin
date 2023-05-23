@@ -2,6 +2,9 @@ package t3h.android.elifeadmin.repositories;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -11,8 +14,8 @@ import t3h.android.elifeadmin.models.Account;
 import t3h.android.elifeadmin.models.Token;
 
 public class TokenRepository {
-    public Token createToken(Account account) {
-        Token token = new Token();
+    public LiveData<Token> createToken(Account account) {
+        MutableLiveData<Token> token = new MutableLiveData<>();
 
         TokenApi tokenApi = ApiProvider.getTokenApi();
         tokenApi.createToken(account).enqueue(new Callback<Token>() {
@@ -20,15 +23,14 @@ public class TokenRepository {
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.code() == 200) {
                     if (response.body() != null) {
-                        token.setAccessToken(response.body().getAccessToken());
-                        token.setRefreshToken(response.body().getRefreshToken());
+                        token.setValue(response.body());
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Log.e("ERROR", "Error when generate token");
+                Log.e("ERROR", t.getMessage());
             }
         });
 
