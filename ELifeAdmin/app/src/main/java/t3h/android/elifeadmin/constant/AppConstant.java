@@ -11,4 +11,6 @@ public class AppConstant {
     public static final String SEARCH_CATEGORY = "Search category";
     public static final String SEARCH_TOPIC = "Search topic";
     public static final String SEARCH_AUDIO = "Search audio";
+    public static final String ACCESS_TOKEN_KEY = "t3h.android.elifeadmin.ACCESS_TOKEN";
+    public static final String REFRESH_TOKEN_KEY = "t3h.android.elifeadmin.REFRESH_TOKEN";
 }
