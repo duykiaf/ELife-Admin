@@ -22,7 +22,6 @@ import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.databinding.FragmentSignInBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
 import t3h.android.elifeadmin.models.Account;
-import t3h.android.elifeadmin.models.Token;
 import t3h.android.elifeadmin.viewmodels.TokenViewModel;
 
 public class SignInFragment extends Fragment {
@@ -58,9 +57,10 @@ public class SignInFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Toast.makeText(requireActivity(), "Sign in successfully!", Toast.LENGTH_SHORT).show();
                         tokenViewModel = new ViewModelProvider(requireActivity()).get(TokenViewModel.class);
-                        Token token = tokenViewModel.createToken(new Account(email, password));
-                        Log.d("accessToken", String.valueOf(token.getAccessToken()));
-                        Log.d("refreshToken", String.valueOf(token.getRefreshToken()));
+                        tokenViewModel.createToken(new Account(email, password)).observe(requireActivity(), token -> {
+                            Log.d("accessToken", String.valueOf(token.getAccessToken()));
+                            Log.d("refreshToken", String.valueOf(token.getRefreshToken()));
+                        });
                         navController.navigate(R.id.dashboardFragment);
                     } else {
                         Toast.makeText(requireActivity(), "Sign in failed. Please try again!", Toast.LENGTH_LONG).show();
