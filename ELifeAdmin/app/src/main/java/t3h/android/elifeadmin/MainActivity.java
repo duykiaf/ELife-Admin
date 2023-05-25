@@ -4,15 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.Toast;
+
+import java.util.Objects;
 
 import t3h.android.elifeadmin.listener.OnBackPressedListener;
+import t3h.android.elifeadmin.ui.DashboardFragment;
+import t3h.android.elifeadmin.ui.SignInFragment;
 
 public class MainActivity extends AppCompatActivity implements OnBackPressedListener {
-    private boolean backPressedOnce = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,22 +20,17 @@ public class MainActivity extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void onFragmentBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.dashboardFragment);
-        if (fragment instanceof OnBackPressedListener) {
-            ((OnBackPressedListener) fragment).onFragmentBackPressed();
-        } else {
-            finishAffinity();
-        }
+        finishAffinity();
     }
 
     @Override
     public void onBackPressed() {
-        if (backPressedOnce) {
-            onFragmentBackPressed();
+        Fragment navHostFragment = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(R.id.navHostFragment));
+        Fragment currentFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+        if (currentFragment instanceof DashboardFragment || currentFragment instanceof SignInFragment) {
+            ((OnBackPressedListener) currentFragment).onFragmentBackPressed();
         } else {
-            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
-            backPressedOnce = true;
-            new Handler().postDelayed(() -> backPressedOnce = false, 2000); // Reset the flag after a delay
+            super.onBackPressed();
         }
     }
 }
