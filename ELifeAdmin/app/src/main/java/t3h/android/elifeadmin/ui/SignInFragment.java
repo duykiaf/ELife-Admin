@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.databinding.FragmentSignInBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
@@ -30,6 +32,7 @@ public class SignInFragment extends Fragment {
     private FragmentSignInBinding binding;
     private TokenViewModel tokenViewModel;
     private SharedPreferences sharedPref;
+    private NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,42 +45,54 @@ public class SignInFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        binding.forgotPwdTxt.setOnClickListener(v -> navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment));
+        navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        FirebaseUser firebaseUser = FirebaseAuthHelper.getCurrentUser();
+        if (firebaseUser == null) {
+            binding.forgotPwdTxt.setOnClickListener(v -> navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment));
+            binding.signInBtn.setOnClickListener(v -> signInBtnClickListener());
+        } else {
+            navController.navigate(R.id.dashboardFragment);
+            onDestroy();
+        }
+    }
 
-        binding.signInBtn.setOnClickListener(v -> {
-            String email = binding.emailEdt.getText().toString().trim();
-            String password = binding.passwordEdt.getText().toString();
-
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireActivity(), "Please fill out the form!", Toast.LENGTH_LONG).show();
-            } else {
-                binding.progressBar.setVisibility(View.VISIBLE);
-                // set progress bar color
-                binding.progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
-                FirebaseAuthHelper.signIn(email, password, task -> {
-                    binding.progressBar.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
-                        sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
-                        tokenViewModel = new ViewModelProvider(requireActivity()).get(TokenViewModel.class);
-                        tokenViewModel.createToken(new Account(email, password)).observe(requireActivity(), token -> {
-                            if (!token.getAccessToken().trim().isEmpty()) {
-                                SharedPreferencesHelper.saveToken(sharedPref, token);
-                            }
-                            Log.d("message", token.getMessage());
-                        });
-                        navController.navigate(R.id.dashboardFragment);
-                    } else {
-                        Toast.makeText(requireActivity(), "Sign in failed. Please try again!", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    private void signInBtnClickListener() {
+        String email = binding.emailEdt.getText().toString().trim();
+        String password = binding.passwordEdt.getText().toString();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(requireActivity(), "Please fill out the form!", Toast.LENGTH_LONG).show();
+        } else {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            // set progress bar color
+            binding.progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
+            FirebaseAuthHelper.signIn(email, password, task -> {
+                binding.progressBar.setVisibility(View.GONE);
+                if (task.isSuccessful()) {
+                    sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
+                    tokenViewModel = new ViewModelProvider(requireActivity()).get(TokenViewModel.class);
+                    tokenViewModel.createToken(new Account(email, password)).observe(requireActivity(), token -> {
+                        if (!token.getAccessToken().trim().isEmpty()) {
+                            SharedPreferencesHelper.saveToken(sharedPref, token);
+                        }
+                        Log.d("message", token.getMessage());
+                    });
+                    navController.navigate(R.id.dashboardFragment);
+                } else {
+                    Toast.makeText(requireActivity(), "Sign in failed. Please try again!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }

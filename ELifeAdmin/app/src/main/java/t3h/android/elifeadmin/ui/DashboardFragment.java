@@ -1,6 +1,8 @@
 package t3h.android.elifeadmin.ui;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +24,14 @@ import t3h.android.elifeadmin.adapters.DashboardAdapter;
 import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentDashboardBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
+import t3h.android.elifeadmin.listener.OnBackPressedListener;
 
 public class DashboardFragment extends Fragment {
     private String[] tabLayoutNames;
     private DashboardAdapter dashboardAdapter;
     private FragmentDashboardBinding dashboardBinding;
-
+    private boolean backPressedOnce = false;
+    private OnBackPressedListener onBackPressedListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -130,4 +134,21 @@ public class DashboardFragment extends Fragment {
         super.onDestroy();
         dashboardBinding = null;
     }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            onBackPressedListener = (OnBackPressedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context + " must implement OnBackPressedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onBackPressedListener = null;
+    }
+
 }
