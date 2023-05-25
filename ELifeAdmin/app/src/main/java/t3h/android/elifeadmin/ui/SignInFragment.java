@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +26,17 @@ import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.databinding.FragmentSignInBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
 import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
+import t3h.android.elifeadmin.listener.OnBackPressedListener;
 import t3h.android.elifeadmin.models.Account;
 import t3h.android.elifeadmin.viewmodels.TokenViewModel;
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends Fragment implements OnBackPressedListener {
     private FragmentSignInBinding binding;
     private TokenViewModel tokenViewModel;
     private SharedPreferences sharedPref;
     private NavController navController;
+    private boolean backPressedOnce = false;
+    private Toast toast;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +97,19 @@ public class SignInFragment extends Fragment {
                     Toast.makeText(requireActivity(), "Sign in failed. Please try again!", Toast.LENGTH_LONG).show();
                 }
             });
+        }
+    }
+
+    @Override
+    public void onFragmentBackPressed() {
+        if (backPressedOnce) {
+            requireActivity().finishAffinity();
+            toast.cancel();
+        } else {
+            toast = Toast.makeText(requireActivity(), "Press back again to exit", Toast.LENGTH_SHORT);
+            toast.show();
+            backPressedOnce = true;
+            new Handler().postDelayed(() -> backPressedOnce = false, 2000); // Reset the flag after a delay
         }
     }
 }

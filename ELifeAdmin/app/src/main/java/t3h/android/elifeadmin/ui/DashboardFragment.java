@@ -1,6 +1,5 @@
 package t3h.android.elifeadmin.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -26,12 +25,13 @@ import t3h.android.elifeadmin.databinding.FragmentDashboardBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
 import t3h.android.elifeadmin.listener.OnBackPressedListener;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements OnBackPressedListener {
     private String[] tabLayoutNames;
     private DashboardAdapter dashboardAdapter;
     private FragmentDashboardBinding dashboardBinding;
     private boolean backPressedOnce = false;
-    private OnBackPressedListener onBackPressedListener;
+    private Toast toast;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -136,19 +136,15 @@ public class DashboardFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            onBackPressedListener = (OnBackPressedListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context + " must implement OnBackPressedListener");
+    public void onFragmentBackPressed() {
+        if (backPressedOnce) {
+            requireActivity().finishAffinity();
+            toast.cancel();
+        } else {
+            toast = Toast.makeText(requireActivity(), "Press back again to exit", Toast.LENGTH_SHORT);
+            toast.show();
+            backPressedOnce = true;
+            new Handler().postDelayed(() -> backPressedOnce = false, 2000); // Reset the flag after a delay
         }
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        onBackPressedListener = null;
-    }
-
 }
