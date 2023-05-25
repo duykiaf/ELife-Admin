@@ -9,7 +9,7 @@
         android:id="@+id/dashboardFragment"
         android:name="t3h.android.elifeadmin.ui.DashboardFragment"
         android:label="DashboardFragment"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_dashboardFragment_to_createNewCategoryFragment"
             app:destination="@id/createNewCategoryFragment" />
@@ -28,7 +28,7 @@
         android:id="@+id/createNewCategoryFragment"
         android:name="t3h.android.elifeadmin.ui.CreateNewCategoryFragment"
         android:label="CreateNewCategoryFragment"
-        tools:layout="@layout/fragment_create_new_category" >
+        tools:layout="@layout/fragment_create_new_category">
         <action
             android:id="@+id/action_createNewCategoryFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
@@ -38,7 +38,7 @@
         android:id="@+id/createNewTopicFragment"
         android:name="t3h.android.elifeadmin.ui.CreateNewTopicFragment"
         android:label="CreateNewTopicFragment"
-        tools:layout="@layout/fragment_create_new_topic" >
+        tools:layout="@layout/fragment_create_new_topic">
         <action
             android:id="@+id/action_createNewTopicFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
@@ -48,7 +48,7 @@
         android:id="@+id/createNewAudioFragment"
         android:name="t3h.android.elifeadmin.ui.CreateNewAudioFragment"
         android:label="CreateNewAudioFragment"
-        tools:layout="@layout/fragment_create_new_audio" >
+        tools:layout="@layout/fragment_create_new_audio">
         <action
             android:id="@+id/action_createNewAudioFragment_to_changePasswordFragment"
             app:destination="@id/changePasswordFragment" />
@@ -62,7 +62,7 @@
         android:id="@+id/signInFragment"
         android:name="t3h.android.elifeadmin.ui.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
