@@ -16,6 +16,15 @@ public class Category {
     @Expose
     private int status;
 
+    public Category() {
+
+    }
+
+    public Category(String name, int status) {
+        this.name = name;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
