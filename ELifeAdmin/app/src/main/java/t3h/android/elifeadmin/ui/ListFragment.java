@@ -1,24 +1,33 @@
 package t3h.android.elifeadmin.ui;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import t3h.android.elifeadmin.R;
+import t3h.android.elifeadmin.adapters.ItemsListAdapter;
 import t3h.android.elifeadmin.databinding.FragmentListBinding;
+import t3h.android.elifeadmin.models.Category;
+import t3h.android.elifeadmin.viewmodels.CategoryViewModel;
 
 public class ListFragment extends Fragment {
     private FragmentListBinding fragmentListBinding;
+    private int position;
+
+    public ListFragment() {
+    }
+
+    public ListFragment(int position) {
+        this.position = position;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +42,40 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initItemsList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // handle item click here
+    }
+
+    private void initItemsList() {
+        switch (position) {
+            case 0:
+                ItemsListAdapter<Category> categoryAdapter = new ItemsListAdapter<>();
+                CategoryViewModel categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
+                categoryViewModel.getAllList().observe(requireActivity(), categoryAdapter::setData);
+                categoryAdapter.bindAdapter((model, view) -> {
+                    if (model.getStatus() == 0) {
+                        view.itemName.setTextColor(getResources().getColor(R.color.dangerColor));
+                        view.itemListLayout.setBackgroundResource(R.drawable.border_red_background);
+                    }
+                    view.itemName.setText(model.getName());
+                });
+                fragmentListBinding.listRcv.setAdapter(categoryAdapter);
+                break;
+            case 1:
+//                ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
+//                fragmentListBinding.listRcv.setAdapter(topicAdapter);
+                break;
+            case 2:
+//                ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
+//                fragmentListBinding.listRcv.setAdapter(audioAdapter);
+                break;
+        }
+        fragmentListBinding.listRcv.setLayoutManager(new LinearLayoutManager(requireActivity()));
     }
 
     @Override

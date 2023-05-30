@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,6 +23,24 @@ public class CategoryRepository {
     public CategoryRepository(Application application) {
         ApiProvider apiProvider = new ApiProvider(application);
         categoryApi = ApiProvider.getCategoryApi();
+    }
+
+    public LiveData<List<Category>> getAllList() {
+        MutableLiveData<List<Category>> result = new MutableLiveData<>(new ArrayList<>());
+        categoryApi.getAllList().enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.isSuccessful()) {
+                    result.setValue(response.body()); // co the null
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.e("ERROR", t.getMessage());
+            }
+        });
+        return result;
     }
 
     public void getCategoryByName(String categoryName, CategoryResultCallback callback) {

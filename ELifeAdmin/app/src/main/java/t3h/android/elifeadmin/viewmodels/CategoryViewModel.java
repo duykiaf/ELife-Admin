@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
 import t3h.android.elifeadmin.models.Category;
 import t3h.android.elifeadmin.repositories.CategoryRepository;
 
@@ -26,6 +28,10 @@ public class CategoryViewModel extends AndroidViewModel {
 
     public void setCategoryName(String categoryName) {
         this.categoryName.setValue(categoryName);
+    }
+
+    public LiveData<List<Category>> getAllList() {
+        return categoryRepo.getAllList();
     }
 
     public LiveData<Category> createCategory(Category category) {
