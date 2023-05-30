@@ -16,7 +16,7 @@
             android:id="@+id/listRcv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/layout_margin_vertical"
+            android:paddingBottom="@dimen/add_btn_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints"
