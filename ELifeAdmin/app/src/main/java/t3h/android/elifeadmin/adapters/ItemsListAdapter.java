@@ -26,6 +26,7 @@ public class ItemsListAdapter<T> extends RecyclerView.Adapter<ItemsListAdapter.I
 
     public void setData(List<T> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
