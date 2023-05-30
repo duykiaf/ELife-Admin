@@ -31,28 +31,65 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
     private FragmentDashboardBinding dashboardBinding;
     private boolean backPressedOnce = false;
     private Toast toast;
+    private NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dashboardBinding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_dashboard, container, false);
-
-        View view = dashboardBinding.getRoot();
-
-        dashboardBinding.appBarFragment.topAppBar.setTitle(AppConstant.DASHBOARD);
-        dashboardBinding.appBarFragment.topAppBar.setNavigationIcon(R.drawable.ic_dashboard);
-
-        tabLayoutNames = getResources().getStringArray(R.array.tabLayoutNames);
-
-        return view;
+        navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+        return dashboardBinding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initTopAppBarUI();
+        initPager();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        onMenuItemClick();
+        onBackPressed();
+        initSearchLayout();
+        onNavigateCreateFragment();
+    }
+
+    private void initTopAppBarUI() {
+        dashboardBinding.appBarFragment.topAppBar.setTitle(AppConstant.DASHBOARD);
+        dashboardBinding.appBarFragment.topAppBar.setNavigationIcon(R.drawable.ic_dashboard);
+    }
+
+    private void onMenuItemClick() {
+        dashboardBinding.appBarFragment.topAppBar.setOnMenuItemClickListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.changePasswordItem:
+                    navController.navigate(R.id.action_dashboardFragment_to_changePasswordFragment);
+                    return true;
+                case R.id.logoutItem:
+                    FirebaseAuthHelper.signOut();
+                    navController.navigate(R.id.signInFragment);
+                    return true;
+            }
+            return false;
+        });
+    }
+
+    private void onBackPressed() {
+        if (!dashboardBinding.appBarFragment.topAppBar.getTitle().equals(AppConstant.DASHBOARD)) {
+            dashboardBinding.appBarFragment.topAppBar.setNavigationOnClickListener(v -> {
+                requireActivity().onBackPressed();
+            });
+        }
+    }
+
+    private void initPager() {
         dashboardAdapter = new DashboardAdapter(this);
         dashboardBinding.pager.setAdapter(dashboardAdapter);
+        tabLayoutNames = getResources().getStringArray(R.array.tabLayoutNames);
         TabLayout tabLayout = dashboardBinding.tabLayout;
         new TabLayoutMediator(tabLayout, dashboardBinding.pager,
                 (tab, position) -> tab.setText(tabLayoutNames[position])
@@ -64,28 +101,37 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
                 super.onPageSelected(position);
                 switch (position) {
                     case 0:
-                        dashboardBinding.addNewImageView.setContentDescription(AppConstant.NEW_CATEGORY);
-                        dashboardBinding.addNewTxtView.setText(AppConstant.NEW_CATEGORY);
-                        dashboardBinding.searchImageView.setContentDescription(AppConstant.SEARCH_CATEGORY);
-                        dashboardBinding.searchEdt.setHint(AppConstant.SEARCH_CATEGORY);
+                        initUIByPager(AppConstant.NEW_CATEGORY, AppConstant.SEARCH_CATEGORY);
                         break;
                     case 1:
-                        dashboardBinding.addNewImageView.setContentDescription(AppConstant.NEW_TOPIC);
-                        dashboardBinding.addNewTxtView.setText(AppConstant.NEW_TOPIC);
-                        dashboardBinding.searchImageView.setContentDescription(AppConstant.SEARCH_TOPIC);
-                        dashboardBinding.searchEdt.setHint(AppConstant.SEARCH_TOPIC);
+                        initUIByPager(AppConstant.NEW_TOPIC, AppConstant.SEARCH_TOPIC);
                         break;
                     case 2:
-                        dashboardBinding.addNewImageView.setContentDescription(AppConstant.NEW_AUDIO);
-                        dashboardBinding.addNewTxtView.setText(AppConstant.NEW_AUDIO);
-                        dashboardBinding.searchImageView.setContentDescription(AppConstant.SEARCH_AUDIO);
-                        dashboardBinding.searchEdt.setHint(AppConstant.SEARCH_AUDIO);
+                        initUIByPager(AppConstant.NEW_AUDIO, AppConstant.SEARCH_AUDIO);
                         break;
                 }
             }
         });
+    }
 
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+    private void initSearchLayout() {
+        dashboardBinding.searchImageView.setOnClickListener(v -> {
+            if (dashboardBinding.searchEdt.getVisibility() == View.VISIBLE) {
+                dashboardBinding.searchEdt.setVisibility(View.GONE);
+            } else {
+                dashboardBinding.searchEdt.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void initUIByPager(String addNewTxt, String searchTxt) {
+        dashboardBinding.addNewImageView.setContentDescription(addNewTxt);
+        dashboardBinding.addNewTxtView.setText(addNewTxt);
+        dashboardBinding.searchImageView.setContentDescription(searchTxt);
+        dashboardBinding.searchEdt.setHint(searchTxt);
+    }
+
+    private void onNavigateCreateFragment() {
         dashboardBinding.addNewImageView.setOnClickListener(v -> {
             String getContentDescription = dashboardBinding.addNewImageView.getContentDescription().toString();
             switch (getContentDescription) {
@@ -99,33 +145,6 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
                     navController.navigate(R.id.action_dashboardFragment_to_createNewAudioFragment);
                     break;
             }
-        });
-
-        dashboardBinding.searchImageView.setOnClickListener(v -> {
-            if (dashboardBinding.searchEdt.getVisibility() == View.VISIBLE) {
-                dashboardBinding.searchEdt.setVisibility(View.GONE);
-            } else {
-                dashboardBinding.searchEdt.setVisibility(View.VISIBLE);
-            }
-        });
-
-        if (!dashboardBinding.appBarFragment.topAppBar.getTitle().equals(AppConstant.DASHBOARD)) {
-            dashboardBinding.appBarFragment.topAppBar.setNavigationOnClickListener(v -> {
-                requireActivity().onBackPressed();
-            });
-        }
-
-        dashboardBinding.appBarFragment.topAppBar.setOnMenuItemClickListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case R.id.changePasswordItem:
-                    navController.navigate(R.id.action_dashboardFragment_to_changePasswordFragment);
-                    return true;
-                case R.id.logoutItem:
-                    FirebaseAuthHelper.signOut();
-                    navController.navigate(R.id.signInFragment);
-                    return true;
-            }
-            return false;
         });
     }
 
@@ -141,7 +160,7 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
             requireActivity().finishAffinity();
             toast.cancel();
         } else {
-            toast = Toast.makeText(requireActivity(), "Press back again to exit", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(requireActivity(), AppConstant.PRESS_AGAIN, Toast.LENGTH_SHORT);
             toast.show();
             backPressedOnce = true;
             new Handler().postDelayed(() -> backPressedOnce = false, 2000); // Reset the flag after a delay
