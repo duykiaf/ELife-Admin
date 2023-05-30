@@ -23,6 +23,7 @@ import androidx.navigation.Navigation;
 import com.google.firebase.auth.FirebaseUser;
 
 import t3h.android.elifeadmin.R;
+import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentSignInBinding;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
 import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
@@ -37,12 +38,14 @@ public class SignInFragment extends Fragment implements OnBackPressedListener {
     private NavController navController;
     private boolean backPressedOnce = false;
     private Toast toast;
+    private FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false);
+        firebaseUser = FirebaseAuthHelper.getCurrentUser();
         return binding.getRoot();
     }
 
@@ -50,11 +53,7 @@ public class SignInFragment extends Fragment implements OnBackPressedListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        FirebaseUser firebaseUser = FirebaseAuthHelper.getCurrentUser();
-        if (firebaseUser == null) {
-            binding.forgotPwdTxt.setOnClickListener(v -> navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment));
-            binding.signInBtn.setOnClickListener(v -> signInBtnClickListener());
-        } else {
+        if (firebaseUser != null) {
             navController.navigate(R.id.dashboardFragment);
             onDestroy();
         }
@@ -63,6 +62,10 @@ public class SignInFragment extends Fragment implements OnBackPressedListener {
     @Override
     public void onResume() {
         super.onResume();
+        if (firebaseUser == null) {
+            binding.forgotPwdTxt.setOnClickListener(v -> navController.navigate(R.id.action_signInFragment_to_forgotPasswordFragment));
+            binding.signInBtn.setOnClickListener(v -> signInBtnClickListener());
+        }
     }
 
     @Override
@@ -76,10 +79,9 @@ public class SignInFragment extends Fragment implements OnBackPressedListener {
         String password = binding.passwordEdt.getText().toString();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(requireActivity(), "Please fill out the form!", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireActivity(), AppConstant.EMPTY_ERROR, Toast.LENGTH_LONG).show();
         } else {
             binding.progressBar.setVisibility(View.VISIBLE);
-            // set progress bar color
             binding.progressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
             FirebaseAuthHelper.signIn(email, password, task -> {
                 binding.progressBar.setVisibility(View.GONE);
@@ -94,7 +96,7 @@ public class SignInFragment extends Fragment implements OnBackPressedListener {
                     });
                     navController.navigate(R.id.dashboardFragment);
                 } else {
-                    Toast.makeText(requireActivity(), "Sign in failed. Please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(requireActivity(), AppConstant.SIGN_FAILED, Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -106,7 +108,7 @@ public class SignInFragment extends Fragment implements OnBackPressedListener {
             requireActivity().finishAffinity();
             toast.cancel();
         } else {
-            toast = Toast.makeText(requireActivity(), "Press back again to exit", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(requireActivity(), AppConstant.PRESS_AGAIN, Toast.LENGTH_SHORT);
             toast.show();
             backPressedOnce = true;
             new Handler().postDelayed(() -> backPressedOnce = false, 2000); // Reset the flag after a delay
