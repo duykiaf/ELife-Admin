@@ -93,4 +93,22 @@ public class CategoryRepository {
 
         return liveData;
     }
+
+    public LiveData<Category> updateCategory(Category category) {
+        MutableLiveData<Category> liveData = new MutableLiveData<>();
+        categoryApi.updateCategory(category).enqueue(new Callback<Category>() {
+            @Override
+            public void onResponse(Call<Category> call, Response<Category> response) {
+                if (response.isSuccessful() && response.code() == 200) {
+                    liveData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Category> call, Throwable t) {
+                Log.e("ERROR", t.getMessage());
+            }
+        });
+        return liveData;
+    }
 }

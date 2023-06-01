@@ -32,6 +32,7 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
     private boolean backPressedOnce = false;
     private Toast toast;
     private NavController navController;
+    private final Bundle bundle = new Bundle();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -133,16 +134,17 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
 
     private void onNavigateCreateFragment() {
         dashboardBinding.addNewImageView.setOnClickListener(v -> {
+            bundle.putBoolean("isUpdate", false);
             String getContentDescription = dashboardBinding.addNewImageView.getContentDescription().toString();
             switch (getContentDescription) {
                 case AppConstant.NEW_CATEGORY:
-                    navController.navigate(R.id.action_dashboardFragment_to_createNewCategoryFragment);
+                    navController.navigate(R.id.action_dashboardFragment_to_createNewCategoryFragment, bundle);
                     break;
                 case AppConstant.NEW_TOPIC:
-                    navController.navigate(R.id.action_dashboardFragment_to_createNewTopicFragment);
+                    navController.navigate(R.id.action_dashboardFragment_to_createNewTopicFragment, bundle);
                     break;
                 case AppConstant.NEW_AUDIO:
-                    navController.navigate(R.id.action_dashboardFragment_to_createNewAudioFragment);
+                    navController.navigate(R.id.action_dashboardFragment_to_createNewAudioFragment, bundle);
                     break;
             }
         });

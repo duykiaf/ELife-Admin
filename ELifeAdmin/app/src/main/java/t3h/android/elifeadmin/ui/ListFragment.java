@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import t3h.android.elifeadmin.R;
@@ -19,8 +21,10 @@ import t3h.android.elifeadmin.models.Category;
 import t3h.android.elifeadmin.viewmodels.CategoryViewModel;
 
 public class ListFragment extends Fragment {
+    private final Bundle bundle = new Bundle();
     private FragmentListBinding fragmentListBinding;
     private int position;
+    private NavController navController;
 
     public ListFragment() {
     }
@@ -34,7 +38,7 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentListBinding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
-
+        navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
         // Inflate the layout for this fragment
         return fragmentListBinding.getRoot();
     }
@@ -65,6 +69,11 @@ public class ListFragment extends Fragment {
                     view.itemName.setText(model.getName());
                 });
                 fragmentListBinding.listRcv.setAdapter(categoryAdapter);
+                categoryAdapter.setOnItemListClickListener(object -> {
+                    bundle.putBoolean("isUpdate", true);
+                    bundle.putSerializable("categoryInfo", object);
+                    navController.navigate(R.id.action_dashboardFragment_to_createNewCategoryFragment, bundle);
+                });
                 break;
             case 1:
 //                ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
