@@ -11,6 +11,9 @@ public class AppConstant {
     public static final String SEARCH_CATEGORY = "Search category";
     public static final String SEARCH_TOPIC = "Search topic";
     public static final String SEARCH_AUDIO = "Search audio";
+    public static final String UPDATE_CATEGORY = "Update category";
+    public static final String UPDATE_TOPIC = "Update topic";
+    public static final String UPDATE_AUDIO = "Update audio";
     public static final String ACCESS_TOKEN_KEY = "t3h.android.elifeadmin.ACCESS_TOKEN";
     public static final String REFRESH_TOKEN_KEY = "t3h.android.elifeadmin.REFRESH_TOKEN";
     public static int INPUT_MAX_LENGTH = 20;
@@ -19,8 +22,8 @@ public class AppConstant {
     public static final String IS_EXISTS_MESSAGE = "This name already exists";
     public static final String CREATE_SUCCESSFULLY = "Create successfully!";
     public static final String CREATE_FAILED = "Create failed. Please try again!";
-    public static final String UPDATE_SUCCESSFULLY = "Create successfully!";
-    public static final String UPDATE_FAILED = "Create failed. Please try again!";
+    public static final String UPDATE_SUCCESSFULLY = "Update successfully!";
+    public static final String UPDATE_FAILED = "Update failed. Please try again!";
     public static final String EMPTY_ERROR = "Please complete all information";
     public static final String SIGN_FAILED = "Sign in failed. Please try again!";
     public static final String PRESS_AGAIN = "Press back again to exit";
