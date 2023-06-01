@@ -20,9 +20,6 @@ public interface CategoryApi {
     @POST("/category/create")
     Call<Category> createCategory(@Body Category category);
 
-    @GET("/category/get-by-id/{id}")
-    Call<List<Category>> getCategoryById(@Path("id") int categoryId);
-
     @PUT("/category/update")
     Call<Category> updateCategory(@Body Category category);
 }
