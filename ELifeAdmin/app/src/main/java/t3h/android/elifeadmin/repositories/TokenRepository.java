@@ -30,28 +30,28 @@ public class TokenRepository {
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
+                Log.e("CREATE TOKEN FAILED", t.getMessage());
             }
         });
 
         return token;
     }
 
-    public LiveData<Token> refreshToken(Token token) {
-        MutableLiveData<Token> tokenLiveData = new MutableLiveData<>();
-
-        tokenApi.refreshToken(token).enqueue(new Callback<Token>() {
+    public LiveData<Token> checkToken(Token token) {
+        MutableLiveData<Token> liveData = new MutableLiveData<>();
+        tokenApi.checkToken(token).enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                tokenLiveData.setValue(response.body());
+                liveData.setValue(response.body());
+                Log.d("CHECK TOKEN", String.valueOf(response.code()));
+                Log.d("RESPONSE BODY", String.valueOf(response.body()));
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
+                Log.e("CHECK TOKEN FAILED", t.getMessage());
             }
         });
-
-        return tokenLiveData;
+        return liveData;
     }
 }

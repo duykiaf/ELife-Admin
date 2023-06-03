@@ -10,6 +10,6 @@ public interface TokenApi {
     @POST("/create_token")
     Call<Token> createToken(@Body Account account);
 
-    @POST("/refresh_token")
-    Call<Token> refreshToken(@Body Token token);
+    @POST("/check_token")
+    Call<Token> checkToken(@Body Token token);
 }

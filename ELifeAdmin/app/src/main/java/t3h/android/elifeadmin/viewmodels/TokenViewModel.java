@@ -18,7 +18,7 @@ public class TokenViewModel extends ViewModel {
         return tokenRepo.createToken(account);
     }
 
-    public LiveData<Token> refreshToken(Token token) {
-        return tokenRepo.refreshToken(token);
+    public LiveData<Token> checkToken(Token token) {
+        return tokenRepo.checkToken(token);
     }
 }
