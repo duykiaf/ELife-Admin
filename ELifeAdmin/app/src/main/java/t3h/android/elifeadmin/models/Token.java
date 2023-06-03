@@ -16,6 +16,14 @@ public class Token {
     @Expose
     private String message;
 
+    public Token() {
+    }
+
+    public Token(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+
     public String getAccessToken() {
         return accessToken;
     }
