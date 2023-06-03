@@ -37,7 +37,7 @@ public class CategoryRepository {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
+                Log.e("GET CATEGORIES LIST FAILED", t.getMessage());
             }
         });
         return result;
@@ -59,7 +59,7 @@ public class CategoryRepository {
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
+                Log.e("GET CATEGORY BY NAME FAILED", t.getMessage());
                 callback.onCategoryResult(null);
             }
         });
@@ -71,23 +71,15 @@ public class CategoryRepository {
         categoryApi.createCategory(category).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                if (response.code() == 200) {
-                    Log.d("CODE", "200 OK");
-                    if (response.body() != null) {
-                        liveData.setValue(response.body());
-                    }
-                } else if (response.code() == 401) {
-                    Log.d("CODE", "401");
-                } else if (response.code() == 403) {
-                    Log.d("CODE", "403");
-                } else {
-                    Log.d("CODE", "Oops!");
+                if (response.isSuccessful()) {
+                    liveData.setValue(response.body());
                 }
+                Log.d("RESPONSE_CODE", String.valueOf(response.code()));
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
+                Log.e("CREATE CATEGORY FAILED", t.getMessage());
             }
         });
 
@@ -99,14 +91,14 @@ public class CategoryRepository {
         categoryApi.updateCategory(category).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                if (response.isSuccessful() && response.code() == 200) {
+                if (response.isSuccessful()) {
                     liveData.setValue(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                Log.e("ERROR", t.getMessage());
+                Log.e("UPDATE CATEGORY FAILED", t.getMessage());
             }
         });
         return liveData;
