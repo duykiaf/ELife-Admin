@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
 
 public class ApiProvider {
-    public static final String BASE_URL = "http://192.168.1.6:3000";
+    public static final String BASE_URL = "http://192.168.1.5:3000";
     private static TokenApi tokenApi;
     private static CategoryApi categoryApi;
     private static TopicApi topicApi;
@@ -57,6 +57,7 @@ public class ApiProvider {
                 Request request = chain.request();
                 Request.Builder builder = request.newBuilder();
                 builder.addHeader("x-access-token", SharedPreferencesHelper.getAccessToken(context));
+                builder.addHeader("x-refresh-token", SharedPreferencesHelper.getRefreshToken(context));
                 return chain.proceed(builder.build());
             };
             okHttpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
