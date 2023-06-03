@@ -16,6 +16,8 @@ public class AppConstant {
     public static final String UPDATE_AUDIO = "Update audio";
     public static final String ACCESS_TOKEN_KEY = "t3h.android.elifeadmin.ACCESS_TOKEN";
     public static final String REFRESH_TOKEN_KEY = "t3h.android.elifeadmin.REFRESH_TOKEN";
+    public static final String REFRESH_TOKEN_SUCCESSFULLY = "refresh token successfully";
+    public static final String SIGN_IN_AGAIN = "Please sign in again to use this feature!";
     public static int INPUT_MAX_LENGTH = 20;
     public static final String LIMIT_ERROR = "This field must not exceed 20 characters";
     public static final String MUST_NOT_BE_EMPTY = "This field must not be empty!";
