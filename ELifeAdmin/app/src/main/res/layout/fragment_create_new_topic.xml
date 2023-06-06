@@ -5,17 +5,22 @@
 
     <data>
 
+        <variable
+            name="TopicViewModel"
+            type="t3h.android.elifeadmin.viewmodels.TopicViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".ui.CreateNewTopicFragment">
 
         <include
             android:id="@+id/appBarFragment"
-            layout="@layout/fragment_app_bar" />
+            layout="@layout/fragment_app_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/nameEdt"
@@ -30,80 +35,102 @@
             android:includeFontPadding="false"
             android:inputType="text"
             android:paddingHorizontal="@dimen/layout_margin_horizontal"
+            android:text="@{TopicViewModel.topicName}"
             android:textColor="@color/black"
             android:textColorHint="@color/primaryColor"
-            android:textSize="@dimen/heading_4" />
+            android:textSize="@dimen/heading_4"
+            app:layout_constraintTop_toBottomOf="@id/appBarFragment" />
 
         <ImageView
+            android:id="@+id/imagePreview"
+            android:layout_width="@dimen/large_btn"
+            android:layout_height="@dimen/large_btn"
+            android:layout_marginTop="@dimen/layout_margin_vertical"
+            android:layout_marginEnd="@dimen/layout_margin_horizontal"
+            android:src="@drawable/ic_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameEdt" />
+
+        <ImageView
+            android:id="@+id/addImage"
             android:layout_width="@dimen/large_btn"
             android:layout_height="@dimen/large_btn"
             android:layout_marginStart="@dimen/layout_margin_horizontal"
             android:layout_marginTop="@dimen/layout_margin_vertical"
             android:background="@drawable/card_background"
             android:padding="@dimen/image_btn_padding"
-            android:src="@drawable/ic_image" />
+            android:src="@drawable/ic_add_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameEdt" />
 
         <TextView
+            android:id="@+id/clickToAddImageTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/layout_margin_horizontal"
             android:layout_marginTop="10dp"
-            android:text="@string/click_to_add_image" />
+            android:text="@string/click_to_add_image"
+            app:layout_constraintTop_toBottomOf="@id/addImage" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/categoriesSpinner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edt_height"
             android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
             android:layout_marginTop="@dimen/layout_margin_vertical"
             android:background="@drawable/card_background"
-            android:hint="@string/select_category"
-            android:textColorHint="@color/primaryColor"
-            app:endIconTint="@color/primaryColor">
+            android:paddingHorizontal="@dimen/add_btn_padding"
+            android:textSize="@dimen/heading_3"
+            app:layout_constraintTop_toBottomOf="@id/clickToAddImageTxt" />
 
-            <AutoCompleteTextView
-                android:id="@+id/categoryCompleteTxt"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edt_height"
-                android:background="@drawable/card_background"
-                android:inputType="none"
-                android:textSize="@dimen/heading_4" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/statusSpinner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edt_height"
             android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
             android:layout_marginTop="@dimen/layout_margin_vertical"
             android:background="@drawable/card_background"
-            android:hint="@string/select_status"
-            android:textColorHint="@color/primaryColor"
+            android:paddingHorizontal="@dimen/add_btn_padding"
+            android:textSize="@dimen/heading_3"
             android:visibility="gone"
-            app:endIconTint="@color/primaryColor">
+            app:layout_constraintTop_toBottomOf="@id/categoriesSpinner" />
 
-            <AutoCompleteTextView
-                android:id="@+id/statusCompleteTxt"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/edt_height"
-                android:background="@drawable/card_background"
-                android:inputType="none"
-                android:textSize="@dimen/heading_4" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.cardview.widget.CardView
             android:id="@+id/saveBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/normal_btn"
             android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
             android:layout_marginTop="@dimen/layout_margin_vertical"
-            android:background="@drawable/button_background"
-            android:fontFamily="@font/ubuntu_bold"
-            android:includeFontPadding="false"
-            android:text="@string/save"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/heading_3" />
+            app:cardBackgroundColor="@color/primaryColor"
+            app:cardCornerRadius="@dimen/radius"
+            app:layout_constraintTop_toBottomOf="@id/statusSpinner">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="@dimen/ic_width"
+                    android:layout_height="@dimen/ic_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/layout_margin_horizontal"
+                    android:layout_toLeftOf="@id/saveText"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/saveText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/save"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/heading_3" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
