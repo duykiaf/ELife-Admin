@@ -18,7 +18,9 @@ import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.adapters.ItemsListAdapter;
 import t3h.android.elifeadmin.databinding.FragmentListBinding;
 import t3h.android.elifeadmin.models.Category;
+import t3h.android.elifeadmin.models.Topic;
 import t3h.android.elifeadmin.viewmodels.CategoryViewModel;
+import t3h.android.elifeadmin.viewmodels.TopicViewModel;
 
 public class ListFragment extends Fragment {
     private final Bundle bundle = new Bundle();
@@ -39,7 +41,6 @@ public class ListFragment extends Fragment {
         fragmentListBinding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
         navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
-        // Inflate the layout for this fragment
         return fragmentListBinding.getRoot();
     }
 
@@ -76,8 +77,22 @@ public class ListFragment extends Fragment {
                 });
                 break;
             case 1:
-//                ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
-//                fragmentListBinding.listRcv.setAdapter(topicAdapter);
+                ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
+                TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
+                topicViewModel.getAllList().observe(requireActivity(), topicAdapter::setData);
+                fragmentListBinding.listRcv.setAdapter(topicAdapter);
+                topicAdapter.bindAdapter((model, view) -> {
+                    if (model.getStatus() == 0) {
+                        view.itemName.setTextColor(getResources().getColor(R.color.dangerColor));
+                        view.itemListLayout.setBackgroundResource(R.drawable.border_red_background);
+                    }
+                    view.itemName.setText(model.getName());
+                });
+                topicAdapter.setOnItemListClickListener(object -> {
+                    bundle.putBoolean("isUpdate", true);
+                    bundle.putSerializable("topicInfo", object);
+                    navController.navigate(R.id.action_dashboardFragment_to_createNewTopicFragment, bundle);
+                });
                 break;
             case 2:
 //                ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
