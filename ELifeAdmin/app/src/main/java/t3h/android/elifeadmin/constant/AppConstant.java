@@ -18,8 +18,13 @@ public class AppConstant {
     public static final String REFRESH_TOKEN_KEY = "t3h.android.elifeadmin.REFRESH_TOKEN";
     public static final String REFRESH_TOKEN_SUCCESSFULLY = "refresh token successfully";
     public static final String SIGN_IN_AGAIN = "Please sign in again to use this feature!";
-    public static int INPUT_MAX_LENGTH = 20;
-    public static final String LIMIT_ERROR = "This field must not exceed 20 characters";
+    public static final String UPLOAD_IMAGE_FAILED = "Upload image failed. Please try again!";
+    public static final String IMAGE_DEFAULT =
+            "https://firebasestorage.googleapis.com/v0/b/elife-e4985.appspot.com/o/elife_logo.png?alt=media&token=1c00288c-e4b5-4801-8001-86abdadba150&_gl=1*swxjga*_ga*MTk0ODkxMTk4Ni4xNjYxOTk1MzM1*_ga_CW55HF8NVT*MTY4NTk0OTY2Ni4xNS4xLjE2ODU5NTI5ODAuMC4wLjA.";
+    public static final int INPUT_MAX_LENGTH = 50;
+    public static final int REQUEST_CODE_STORAGE_PERMISSION = 9999;
+    public static final int REQUEST_CODE_SELECT_IMAGE = 888;
+    public static final String LIMIT_ERROR = "This field must not exceed 50 characters";
     public static final String MUST_NOT_BE_EMPTY = "This field must not be empty!";
     public static final String IS_EXISTS_MESSAGE = "This name already exists";
     public static final String CREATE_SUCCESSFULLY = "Create successfully!";
