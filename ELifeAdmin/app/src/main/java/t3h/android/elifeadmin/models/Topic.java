@@ -3,7 +3,9 @@ package t3h.android.elifeadmin.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Topic {
+import java.io.Serializable;
+
+public class Topic implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
@@ -12,17 +14,13 @@ public class Topic {
     @Expose
     private String name;
 
-    @SerializedName("category_id")
-    @Expose
-    private int categoryId;
-
-    @SerializedName("category_name")
-    @Expose
-    private String categoryName;
-
     @SerializedName("image")
     @Expose
     private String image;
+
+    @SerializedName("category_id")
+    @Expose
+    private int categoryId;
 
     @SerializedName("status")
     @Expose
@@ -50,14 +48,6 @@ public class Topic {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 
     public String getImage() {
