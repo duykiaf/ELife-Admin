@@ -97,7 +97,7 @@ public class CreateNewCategoryFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 categoryViewModel.setCategoryName(charSequence.toString());
-                if (charSequence.toString().length() == 20) {
+                if (charSequence.toString().length() == 50) {
                     binding.nameEdt.setError(AppConstant.LIMIT_ERROR);
                 }
             }
