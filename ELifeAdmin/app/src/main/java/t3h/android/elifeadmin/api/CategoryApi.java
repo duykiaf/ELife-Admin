@@ -14,6 +14,9 @@ public interface CategoryApi {
     @GET("/category/list")
     Call<List<Category>> getAllList();
 
+    @GET("/category/get-active-categories")
+    Call<List<Category>> getActiveCategories();
+
     @GET("/category/get-by-name/{name}")
     Call<List<Category>> getCategoryByName(@Path("name") String categoryName);
 

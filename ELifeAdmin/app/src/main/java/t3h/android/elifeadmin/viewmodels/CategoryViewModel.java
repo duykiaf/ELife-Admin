@@ -34,6 +34,10 @@ public class CategoryViewModel extends AndroidViewModel {
         return categoryRepo.getAllList();
     }
 
+    public LiveData<List<Category>> getActiveCategories() {
+        return categoryRepo.getActiveCategories();
+    }
+
     public LiveData<Category> createCategory(Category category) {
         return categoryRepo.createCategory(category);
     }

@@ -14,7 +14,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import t3h.android.elifeadmin.api.ApiProvider;
 import t3h.android.elifeadmin.api.CategoryApi;
-import t3h.android.elifeadmin.callback.CategoryResultCallback;
+import t3h.android.elifeadmin.callback.ResultListCallback;
 import t3h.android.elifeadmin.models.Category;
 
 public class CategoryRepository {
@@ -30,9 +30,7 @@ public class CategoryRepository {
         categoryApi.getAllList().enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful()) {
-                    result.setValue(response.body()); // co the null
-                }
+                result.setValue(response.body()); // co the null
             }
 
             @Override
@@ -43,24 +41,38 @@ public class CategoryRepository {
         return result;
     }
 
-    public void getCategoryByName(String categoryName, CategoryResultCallback callback) {
+    public LiveData<List<Category>> getActiveCategories() {
+        MutableLiveData<List<Category>> result = new MutableLiveData<>(new ArrayList<>());
+        categoryApi.getActiveCategories().enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                result.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.e("GET ACTIVE CATEGORIES LIST FAILED", t.getMessage());
+            }
+        });
+        return result;
+    }
+
+    public void getCategoryByName(String categoryName, ResultListCallback<Category> callback) {
         categoryApi.getCategoryByName(categoryName).enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful()) {
-                    List<Category> categoryList = response.body();
-                    if (categoryList.size() != 0) {
-                        callback.onCategoryResult(categoryList);
-                    } else {
-                        callback.onCategoryResult(null);
-                    }
+                List<Category> categoryList = response.body();
+                if (categoryList != null) {
+                    callback.onResultList(categoryList);
+                } else {
+                    callback.onResultList(null);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
                 Log.e("GET CATEGORY BY NAME FAILED", t.getMessage());
-                callback.onCategoryResult(null);
+                callback.onResultList(null);
             }
         });
     }
@@ -71,10 +83,7 @@ public class CategoryRepository {
         categoryApi.createCategory(category).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                if (response.isSuccessful()) {
-                    liveData.setValue(response.body());
-                }
-                Log.d("RESPONSE_CODE", String.valueOf(response.code()));
+                liveData.setValue(response.body());
             }
 
             @Override
@@ -91,9 +100,7 @@ public class CategoryRepository {
         categoryApi.updateCategory(category).enqueue(new Callback<Category>() {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
-                if (response.isSuccessful()) {
-                    liveData.setValue(response.body());
-                }
+                liveData.setValue(response.body());
             }
 
             @Override
