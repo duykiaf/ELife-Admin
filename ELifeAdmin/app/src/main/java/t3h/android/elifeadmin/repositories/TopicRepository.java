@@ -40,6 +40,22 @@ public class TopicRepository {
         return liveData;
     }
 
+    public LiveData<List<Topic>> getActiveTopicsList() {
+        MutableLiveData<List<Topic>> liveData = new MutableLiveData<>();
+        topicApi.getActiveTopicsList().enqueue(new Callback<List<Topic>>() {
+            @Override
+            public void onResponse(Call<List<Topic>> call, Response<List<Topic>> response) {
+                liveData.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Topic>> call, Throwable t) {
+                Log.e("GET ACTIVE TOPICS LIST FAILED", t.getMessage());
+            }
+        });
+        return liveData;
+    }
+
     public void getTopicByName(String topicName, ResultListCallback<Topic> callback) {
         topicApi.getTopicByName(topicName).enqueue(new Callback<List<Topic>>() {
             @Override

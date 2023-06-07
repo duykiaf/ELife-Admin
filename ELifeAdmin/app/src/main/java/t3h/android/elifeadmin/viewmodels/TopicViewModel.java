@@ -33,6 +33,10 @@ public class TopicViewModel extends AndroidViewModel {
         return topicRepo.getAllList();
     }
 
+    public LiveData<List<Topic>> getActiveTopicsList() {
+        return topicRepo.getActiveTopicsList();
+    }
+
     public LiveData<Topic> createTopic(Topic topic) {
         return topicRepo.createTopic(topic);
     }

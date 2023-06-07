@@ -17,6 +17,9 @@ public interface TopicApi {
     @GET("/topic/get-by-name/{name}")
     Call<List<Topic>> getTopicByName(@Path("name") String topicName);
 
+    @GET("/topic/get-active-topics")
+    Call<List<Topic>> getActiveTopicsList();
+
     @POST("/topic/create")
     Call<Topic> createTopic(@Body Topic topic);
 
