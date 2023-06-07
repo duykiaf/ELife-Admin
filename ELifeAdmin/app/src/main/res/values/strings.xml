@@ -14,8 +14,8 @@
     <string name="lyrics">Lyrics</string>
     <string name="active">Active</string>
     <string name="inactive">Inactive</string>
-    <string name="select_category">Select category</string>
-    <string name="select_status">Select status</string>
+    <string name="select_category">Category:</string>
+    <string name="select_status">Status:</string>
     <string name="upload_file">Upload file</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="change_password">Change password</string>
@@ -36,9 +36,12 @@
     <string name="item_name">Item name</string>
     <string name="click_to_add_image">(Click to add image)</string>
     <string name="click_to_add_audio">(Click to add audio)</string>
-    <string name="select_topic">Select topic</string>
+    <string name="select_topic">Topic:</string>
     <string name="b">B</string>
     <string name="i">I</string>
     <string name="u">U</string>
     <string name="search">Search</string>
+    <string name="file_name">Audio file name</string>
+    <string name="title">Title</string>
+    <string name="no_format">No format</string>
 </resources>
