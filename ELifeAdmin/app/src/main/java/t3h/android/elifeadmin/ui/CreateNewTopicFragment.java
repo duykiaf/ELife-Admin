@@ -366,7 +366,7 @@ public class CreateNewTopicFragment extends Fragment {
                         createTopic();
                     }
                 }).addOnFailureListener(e ->
-                        Toast.makeText(requireActivity(), AppConstant.UPLOAD_IMAGE_FAILED, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), AppConstant.UPLOAD_FILE_FAILED, Toast.LENGTH_SHORT).show()
                 ));
     }
 
