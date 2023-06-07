@@ -60,6 +60,7 @@ public class ChangePasswordFragment extends Fragment {
                             Toast.makeText(requireActivity(), "Change password successfully! You can sign in again.",
                                     Toast.LENGTH_LONG).show();
                             NavController navController = Navigation.findNavController(requireActivity(), R.id.navHostFragment);
+                            FirebaseAuthHelper.signOut();
                             navController.navigate(R.id.signInFragment);
                         } else {
                             Toast.makeText(requireActivity(), "Change password failed. Please try again!", Toast.LENGTH_LONG).show();
