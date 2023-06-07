@@ -9,16 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import java.util.List;
+
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.adapters.ItemsListAdapter;
 import t3h.android.elifeadmin.databinding.FragmentListBinding;
+import t3h.android.elifeadmin.databinding.ItemListLayoutBinding;
+import t3h.android.elifeadmin.listener.OnBindViewListener;
+import t3h.android.elifeadmin.models.Audio;
 import t3h.android.elifeadmin.models.Category;
 import t3h.android.elifeadmin.models.Topic;
+import t3h.android.elifeadmin.viewmodels.AudioViewModel;
 import t3h.android.elifeadmin.viewmodels.CategoryViewModel;
 import t3h.android.elifeadmin.viewmodels.TopicViewModel;
 
@@ -95,8 +102,22 @@ public class ListFragment extends Fragment {
                 });
                 break;
             case 2:
-//                ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
-//                fragmentListBinding.listRcv.setAdapter(audioAdapter);
+                ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
+                AudioViewModel audioViewModel = new ViewModelProvider(requireActivity()).get(AudioViewModel.class);
+                audioViewModel.getAllList().observe(requireActivity(), audioAdapter::setData);
+                fragmentListBinding.listRcv.setAdapter(audioAdapter);
+                audioAdapter.bindAdapter((model, view) -> {
+                    if (model.getStatus() == 0) {
+                        view.itemName.setTextColor(getResources().getColor(R.color.dangerColor));
+                        view.itemListLayout.setBackgroundResource(R.drawable.border_red_background);
+                    }
+                    view.itemName.setText(model.getTitle());
+                });
+                audioAdapter.setOnItemListClickListener(object -> {
+                    bundle.putBoolean("isUpdate", true);
+                    bundle.putSerializable("audioInfo", object);
+                    navController.navigate(R.id.action_dashboardFragment_to_createNewAudioFragment, bundle);
+                });
                 break;
         }
         fragmentListBinding.listRcv.setLayoutManager(new LinearLayoutManager(requireActivity()));
