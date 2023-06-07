@@ -3,7 +3,9 @@ package t3h.android.elifeadmin.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Audio {
+import java.io.Serializable;
+
+public class Audio implements Serializable {
     @SerializedName("id")
     @Expose
     private int id;
@@ -16,6 +18,10 @@ public class Audio {
     @Expose
     private String audioFile;
 
+    @SerializedName("file_name")
+    @Expose
+    private String fileName;
+
     @SerializedName("lyrics")
     @Expose
     private String lyrics;
@@ -23,10 +29,6 @@ public class Audio {
     @SerializedName("topic_id")
     @Expose
     private int topicId;
-
-    @SerializedName("topic_name")
-    @Expose
-    private String topicName;
 
     @SerializedName("status")
     @Expose
@@ -64,20 +66,20 @@ public class Audio {
         this.lyrics = lyrics;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public int getTopicId() {
         return topicId;
     }
 
     public void setTopicId(int topicId) {
         this.topicId = topicId;
-    }
-
-    public String getTopicName() {
-        return topicName;
-    }
-
-    public void setTopicName(String topicName) {
-        this.topicName = topicName;
     }
 
     public int getStatus() {
