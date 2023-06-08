@@ -1,6 +1,8 @@
 package t3h.android.elifeadmin.ui;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.List;
-
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.adapters.ItemsListAdapter;
 import t3h.android.elifeadmin.databinding.FragmentListBinding;
-import t3h.android.elifeadmin.databinding.ItemListLayoutBinding;
-import t3h.android.elifeadmin.listener.OnBindViewListener;
 import t3h.android.elifeadmin.models.Audio;
 import t3h.android.elifeadmin.models.Category;
 import t3h.android.elifeadmin.models.Topic;
@@ -60,8 +57,8 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        initSearchLayout();
         fragmentListBinding.goToTopImageView.setOnClickListener(v -> fragmentListBinding.listRcv.smoothScrollToPosition(0));
-        // handle item click here
     }
 
     private void initItemsList() {
@@ -69,7 +66,25 @@ public class ListFragment extends Fragment {
             case 0:
                 ItemsListAdapter<Category> categoryAdapter = new ItemsListAdapter<>();
                 CategoryViewModel categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
-                categoryViewModel.getAllList().observe(requireActivity(), categoryAdapter::setData);
+                categoryViewModel.getAllList().observe(requireActivity(), categories -> {
+                    categoryAdapter.setData(categories);
+                    fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            categoryAdapter.cancelTimer();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            categoryAdapter.searchList(editable.toString(), categories);
+                        }
+                    });
+                });
+                fragmentListBinding.listRcv.setAdapter(categoryAdapter);
                 categoryAdapter.bindAdapter((model, view) -> {
                     if (model.getStatus() == 0) {
                         view.itemName.setTextColor(getResources().getColor(R.color.dangerColor));
@@ -77,7 +92,6 @@ public class ListFragment extends Fragment {
                     }
                     view.itemName.setText(model.getName());
                 });
-                fragmentListBinding.listRcv.setAdapter(categoryAdapter);
                 categoryAdapter.setOnItemListClickListener(object -> {
                     bundle.putBoolean("isUpdate", true);
                     bundle.putSerializable("categoryInfo", object);
@@ -87,7 +101,24 @@ public class ListFragment extends Fragment {
             case 1:
                 ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
                 TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
-                topicViewModel.getAllList().observe(requireActivity(), topicAdapter::setData);
+                topicViewModel.getAllList().observe(requireActivity(), topics -> {
+                    topicAdapter.setData(topics);
+                    fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            topicAdapter.cancelTimer();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            topicAdapter.searchList(editable.toString(), topics);
+                        }
+                    });
+                });
                 fragmentListBinding.listRcv.setAdapter(topicAdapter);
                 topicAdapter.bindAdapter((model, view) -> {
                     if (model.getStatus() == 0) {
@@ -105,7 +136,24 @@ public class ListFragment extends Fragment {
             case 2:
                 ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
                 AudioViewModel audioViewModel = new ViewModelProvider(requireActivity()).get(AudioViewModel.class);
-                audioViewModel.getAllList().observe(requireActivity(), audioAdapter::setData);
+                audioViewModel.getAllList().observe(requireActivity(), audios -> {
+                    audioAdapter.setData(audios);
+                    fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            audioAdapter.cancelTimer();
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+                            audioAdapter.searchList(editable.toString(), audios);
+                        }
+                    });
+                });
                 fragmentListBinding.listRcv.setAdapter(audioAdapter);
                 audioAdapter.bindAdapter((model, view) -> {
                     if (model.getStatus() == 0) {
@@ -122,6 +170,18 @@ public class ListFragment extends Fragment {
                 break;
         }
         fragmentListBinding.listRcv.setLayoutManager(new LinearLayoutManager(requireActivity()));
+    }
+
+    private void initSearchLayout() {
+        fragmentListBinding.searchImageView.setOnClickListener(v -> {
+            if (fragmentListBinding.searchEdt.getVisibility() == View.VISIBLE) {
+                fragmentListBinding.searchEdt.setVisibility(View.GONE);
+                fragmentListBinding.searchImageView.setBackgroundResource(R.drawable.button_background);
+            } else {
+                fragmentListBinding.searchEdt.setVisibility(View.VISIBLE);
+                fragmentListBinding.searchImageView.setBackgroundResource(R.drawable.pressed_button_background);
+            }
+        });
     }
 
     @Override
