@@ -119,15 +119,16 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
         dashboardBinding.searchImageView.setOnClickListener(v -> {
             if (dashboardBinding.searchEdt.getVisibility() == View.VISIBLE) {
                 dashboardBinding.searchEdt.setVisibility(View.GONE);
+                dashboardBinding.searchImageView.setBackgroundResource(R.drawable.button_background);
             } else {
                 dashboardBinding.searchEdt.setVisibility(View.VISIBLE);
+                dashboardBinding.searchImageView.setBackgroundResource(R.drawable.pressed_button_background);
             }
         });
     }
 
     private void initUIByPager(String addNewTxt, String searchTxt) {
         dashboardBinding.addNewImageView.setContentDescription(addNewTxt);
-        dashboardBinding.addNewTxtView.setText(addNewTxt);
         dashboardBinding.searchImageView.setContentDescription(searchTxt);
         dashboardBinding.searchEdt.setHint(searchTxt);
     }

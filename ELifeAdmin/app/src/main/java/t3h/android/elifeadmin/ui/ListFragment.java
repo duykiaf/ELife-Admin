@@ -60,6 +60,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        fragmentListBinding.goToTopImageView.setOnClickListener(v -> fragmentListBinding.listRcv.smoothScrollToPosition(0));
         // handle item click here
     }
 
