@@ -76,6 +76,7 @@
             android:contentDescription="@string/search"
             android:padding="10dp"
             android:src="@drawable/ic_search"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@id/goToTopImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/white" />
