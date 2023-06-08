@@ -55,7 +55,6 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
         super.onResume();
         onMenuItemClick();
         onBackPressed();
-        initSearchLayout();
         onNavigateCreateFragment();
     }
 
@@ -111,18 +110,6 @@ public class DashboardFragment extends Fragment implements OnBackPressedListener
                         initUIByPager(AppConstant.NEW_AUDIO, AppConstant.SEARCH_AUDIO);
                         break;
                 }
-            }
-        });
-    }
-
-    private void initSearchLayout() {
-        dashboardBinding.searchImageView.setOnClickListener(v -> {
-            if (dashboardBinding.searchEdt.getVisibility() == View.VISIBLE) {
-                dashboardBinding.searchEdt.setVisibility(View.GONE);
-                dashboardBinding.searchImageView.setBackgroundResource(R.drawable.button_background);
-            } else {
-                dashboardBinding.searchEdt.setVisibility(View.VISIBLE);
-                dashboardBinding.searchImageView.setBackgroundResource(R.drawable.pressed_button_background);
             }
         });
     }
