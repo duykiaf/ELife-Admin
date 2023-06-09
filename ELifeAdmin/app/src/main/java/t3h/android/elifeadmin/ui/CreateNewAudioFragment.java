@@ -350,7 +350,7 @@ public class CreateNewAudioFragment extends Fragment {
     }
 
     private void initStatusDropdownUI() {
-        binding.selectStatusTxt.setVisibility(View.VISIBLE);
+        binding.selectStatusLabel.setVisibility(View.VISIBLE);
         binding.statusSpinner.setVisibility(View.VISIBLE);
         ArrayAdapter<DropdownItem> adapter = new ArrayAdapter<>(requireActivity(),
                 android.R.layout.simple_spinner_item, DropdownListHelper.statusDropdown());

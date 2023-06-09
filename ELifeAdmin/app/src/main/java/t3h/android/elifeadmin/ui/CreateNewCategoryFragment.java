@@ -139,6 +139,7 @@ public class CreateNewCategoryFragment extends Fragment {
     }
 
     private void initStatusDropdownUI() {
+        binding.statusLabel.setVisibility(View.VISIBLE);
         binding.spinner.setVisibility(View.VISIBLE);
         ArrayAdapter<DropdownItem> adapter = new ArrayAdapter<>(requireActivity(),
                 android.R.layout.simple_spinner_item, DropdownListHelper.statusDropdown());

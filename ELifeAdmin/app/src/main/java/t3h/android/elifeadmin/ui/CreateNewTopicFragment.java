@@ -211,6 +211,7 @@ public class CreateNewTopicFragment extends Fragment {
     }
 
     private void initStatusDropdown() {
+        binding.selectStatusLabel.setVisibility(View.VISIBLE);
         binding.statusSpinner.setVisibility(View.VISIBLE);
         ArrayAdapter<DropdownItem> adapter = new ArrayAdapter<>(requireActivity(),
                 android.R.layout.simple_spinner_item, DropdownListHelper.statusDropdown());

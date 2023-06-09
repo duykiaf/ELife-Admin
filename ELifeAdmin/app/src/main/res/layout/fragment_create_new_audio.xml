@@ -29,23 +29,33 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/layout_margin_horizontal">
 
+                <TextView
+                    android:id="@+id/audioTitleLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:text="@string/title"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/heading_4"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
                 <EditText
                     android:id="@+id/titleEdt"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edt_height"
-                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:layout_marginTop="@dimen/layout_margin_10dp"
                     android:background="@drawable/card_background"
                     android:fontFamily="@font/ubuntu_regular"
-                    android:hint="@string/title"
                     android:imeOptions="actionDone"
                     android:includeFontPadding="false"
                     android:inputType="text"
                     android:paddingHorizontal="@dimen/layout_margin_horizontal"
                     android:text="@{AudioViewModel.audioTitle}"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/primaryColor"
                     android:textSize="@dimen/heading_4"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/audioTitleLabel" />
 
                 <ImageView
                     android:id="@+id/uploadAudioBtn"
@@ -87,15 +97,26 @@
                     app:layout_constraintStart_toEndOf="@id/uploadAudioBtn"
                     app:layout_constraintTop_toTopOf="@id/uploadAudioBtn" />
 
+                <TextView
+                    android:id="@+id/audioLyricsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/layout_margin_horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:text="@string/lyrics"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="@dimen/heading_4"
+                    app:layout_constraintTop_toBottomOf="@id/clickToAddAudioTxt"
+                    tools:ignore="MissingConstraints" />
+
                 <EditText
                     android:id="@+id/lyricsEdt"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
-                    android:layout_marginTop="@dimen/layout_margin_vertical"
+                    android:layout_marginTop="@dimen/layout_margin_10dp"
                     android:background="@drawable/card_background"
                     android:fontFamily="@font/ubuntu_regular"
                     android:gravity="start"
-                    android:hint="@string/lyrics"
                     android:imeOptions="actionDone"
                     android:includeFontPadding="false"
                     android:inputType="textMultiLine"
@@ -105,9 +126,8 @@
                     android:scrollbars="vertical"
                     android:text="@{AudioViewModel.audioLyrics}"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/primaryColor"
                     android:textSize="@dimen/heading_4"
-                    app:layout_constraintTop_toBottomOf="@id/clickToAddAudioTxt" />
+                    app:layout_constraintTop_toBottomOf="@id/audioLyricsLabel" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/boldBtn"
@@ -169,7 +189,7 @@
                     app:layout_constraintTop_toTopOf="@id/underlineBtn" />
 
                 <TextView
-                    android:id="@+id/selectTopicTxt"
+                    android:id="@+id/selectTopicLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_vertical"
@@ -187,10 +207,10 @@
                     android:background="@drawable/card_background"
                     android:paddingHorizontal="@dimen/add_btn_padding"
                     android:textSize="@dimen/heading_3"
-                    app:layout_constraintTop_toBottomOf="@id/selectTopicTxt" />
+                    app:layout_constraintTop_toBottomOf="@id/selectTopicLabel" />
 
                 <TextView
-                    android:id="@+id/selectStatusTxt"
+                    android:id="@+id/selectStatusLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/layout_margin_vertical"
@@ -210,7 +230,7 @@
                     android:paddingHorizontal="@dimen/add_btn_padding"
                     android:textSize="@dimen/heading_3"
                     android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/selectStatusTxt" />
+                    app:layout_constraintTop_toBottomOf="@id/selectStatusLabel" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/saveBtn"
