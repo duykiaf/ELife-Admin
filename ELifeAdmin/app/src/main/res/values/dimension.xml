@@ -18,7 +18,7 @@
     <dimen name="style_btn">50dp</dimen>
     <dimen name="add_btn_padding">10dp</dimen>
     <dimen name="margin_bottom">45dp</dimen>
-    <dimen name="quick_actions_layout_padding">10dp</dimen>
+    <dimen name="layout_margin_10dp">10dp</dimen>
     <dimen name="add_ic_margin_start">60dp</dimen>
     <dimen name="search_ic_margin_end">60dp</dimen>
 </resources>
