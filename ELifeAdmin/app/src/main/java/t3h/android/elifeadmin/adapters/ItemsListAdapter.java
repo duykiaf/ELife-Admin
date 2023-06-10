@@ -93,11 +93,11 @@ public class ItemsListAdapter<T> extends RecyclerView.Adapter<ItemsListAdapter.I
                 } else {
                     List<T> temp = new ArrayList<>();
                     for (T item : modelList) {
-                        if (item instanceof Category && ((Category) item).getName().toLowerCase().contains(keyword.toLowerCase())) {
+                        if (item instanceof Category && ((Category) item).getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
                             temp.add(item);
-                        } else if (item instanceof Topic && ((Topic) item).getName().toLowerCase().contains(keyword.toLowerCase())) {
+                        } else if (item instanceof Topic && ((Topic) item).getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
                             temp.add(item);
-                        } else if (item instanceof Audio && ((Audio) item).getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+                        } else if (item instanceof Audio && ((Audio) item).getTitle().toLowerCase().contains(keyword.trim().toLowerCase())) {
                             temp.add(item);
                         }
                     }
