@@ -15,9 +15,8 @@ public class SharedPreferencesHelper {
     }
 
     public static String getAccessToken(Context context) {
-        String result = context.getSharedPreferences("MainActivity", Context.MODE_PRIVATE)
+        return context.getSharedPreferences("MainActivity", Context.MODE_PRIVATE)
                 .getString(AppConstant.ACCESS_TOKEN_KEY, "");
-        return result;
     }
 
     public static String getRefreshToken(Context context) {
