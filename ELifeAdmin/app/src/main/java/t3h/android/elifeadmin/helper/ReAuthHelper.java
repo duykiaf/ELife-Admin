@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import t3h.android.elifeadmin.models.Account;
 import t3h.android.elifeadmin.viewmodels.TokenViewModel;
 
-public class SignInHelper {
+public class ReAuthHelper {
     public static void reAuth(String email, String password, SharedPreferences sharedPref, Activity activity) {
         FirebaseAuthHelper.signIn(email, password, task -> {
             if (task.isSuccessful()) {
