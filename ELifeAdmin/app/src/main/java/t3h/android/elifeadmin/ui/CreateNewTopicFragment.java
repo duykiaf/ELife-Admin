@@ -330,7 +330,7 @@ public class CreateNewTopicFragment extends Fragment {
     private void checkValidate(Boolean isUpdate) {
         TopicRepository topicRepo = new TopicRepository(requireActivity().getApplication());
         topicRepo.getTopicByName(getTopicName, resultList -> {
-            if (resultList.size() > 0) {
+            if (resultList != null && resultList.size() > 0) {
                 errorMess(false);
             } else {
                 checkSelectedImageUri(isUpdate);

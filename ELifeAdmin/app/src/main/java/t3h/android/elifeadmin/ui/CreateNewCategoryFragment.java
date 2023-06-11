@@ -23,12 +23,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentCreateNewCategoryBinding;
 import t3h.android.elifeadmin.helper.DropdownListHelper;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
+import t3h.android.elifeadmin.helper.JWTHelper;
 import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
+import t3h.android.elifeadmin.helper.ReAuthHelper;
 import t3h.android.elifeadmin.models.Category;
 import t3h.android.elifeadmin.models.DropdownItem;
 import t3h.android.elifeadmin.models.Token;
@@ -175,18 +179,18 @@ public class CreateNewCategoryFragment extends Fragment {
                 SharedPreferencesHelper.getRefreshToken(requireContext()));
         tokenViewModel.checkToken(token).observe(requireActivity(), result -> {
             binding.progressBar.setVisibility(View.GONE);
+            SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
             if (result != null) {
                 if (AppConstant.REFRESH_TOKEN_SUCCESSFULLY.equals(result.getMessage())) {
-                    // save access and refresh token
-                    SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
                     SharedPreferencesHelper.saveToken(sharedPref, result);
-                    storeCategory();
-                } else {
-                    storeCategory();
                 }
             } else {
-                Toast.makeText(requireActivity(), AppConstant.SIGN_IN_AGAIN, Toast.LENGTH_SHORT).show();
+                String getPassword = JWTHelper.decoded(SharedPreferencesHelper.getRefreshToken(requireContext()));
+                FirebaseUser firebaseUser = FirebaseAuthHelper.getCurrentUser();
+                String getEmail = firebaseUser.getEmail();
+                ReAuthHelper.reAuth(getEmail, getPassword, sharedPref, requireActivity());
             }
+            storeCategory();
         });
     }
 
@@ -207,7 +211,7 @@ public class CreateNewCategoryFragment extends Fragment {
         CategoryRepository categoryRepo = new CategoryRepository(requireActivity().getApplication());
         categoryRepo.getCategoryByName(getCategoryName, categoryList -> {
             binding.progressBar.setVisibility(View.GONE);
-            if (categoryList != null) {
+            if (categoryList != null && categoryList.size() > 0) {
                 errorMess(false);
             } else {
                 if (isUpdate) {
