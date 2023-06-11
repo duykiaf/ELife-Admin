@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -184,13 +185,21 @@ public class CreateNewCategoryFragment extends Fragment {
                 if (AppConstant.REFRESH_TOKEN_SUCCESSFULLY.equals(result.getMessage())) {
                     SharedPreferencesHelper.saveToken(sharedPref, result);
                 }
+                storeCategory();
             } else {
                 String getPassword = JWTHelper.decoded(SharedPreferencesHelper.getRefreshToken(requireContext()));
-                FirebaseUser firebaseUser = FirebaseAuthHelper.getCurrentUser();
-                String getEmail = firebaseUser.getEmail();
-                ReAuthHelper.reAuth(getEmail, getPassword, sharedPref, requireActivity());
+                String getEmail = FirebaseAuthHelper.getCurrentUser().getEmail();
+                ReAuthHelper reAuthHelper = new ReAuthHelper();
+                reAuthHelper.reAuth(requireActivity(), getEmail, getPassword, sharedPref, isSuccess -> {
+                    if (isSuccess) {
+                        Log.e("isSuccess", "true");
+                        storeCategory();
+                    } else {
+                        Log.e("isSuccess", "false");
+                        Toast.makeText(requireActivity(), AppConstant.SIGN_IN_AGAIN, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
-            storeCategory();
         });
     }
 
@@ -263,5 +272,4 @@ public class CreateNewCategoryFragment extends Fragment {
         super.onDestroy();
         binding = null;
     }
-
 }
