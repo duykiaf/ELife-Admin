@@ -317,7 +317,7 @@ public class CreateNewTopicFragment extends Fragment {
 
     private void storeTopic() {
         if (alreadyAvailableTopic != null) { // update when topic name changed
-            if (!alreadyAvailableTopic.getName().equals(getTopicName)) {
+            if (!alreadyAvailableTopic.getName().equalsIgnoreCase(getTopicName)) {
                 checkValidate(true);
             } else { // update when topic name not change
                 checkSelectedImageUri(true);

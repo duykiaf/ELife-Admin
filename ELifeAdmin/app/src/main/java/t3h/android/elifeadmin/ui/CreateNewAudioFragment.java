@@ -408,7 +408,7 @@ public class CreateNewAudioFragment extends Fragment {
 
     private void storeAudio() {
         if (alreadyAvailableAudio != null) {
-            if (!alreadyAvailableAudio.getTitle().equals(getAudioTitle)) {
+            if (!alreadyAvailableAudio.getTitle().equalsIgnoreCase(getAudioTitle)) {
                 checkAudioTitle(true);
             } else {
                 checkSelectedUri();

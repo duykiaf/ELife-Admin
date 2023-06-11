@@ -197,7 +197,7 @@ public class CreateNewCategoryFragment extends Fragment {
     private void storeCategory() {
         // create or update
         if (alreadyAvailableCategory != null) {
-            if (!alreadyAvailableCategory.getName().equals(getCategoryName)) {
+            if (!alreadyAvailableCategory.getName().equalsIgnoreCase(getCategoryName)) {
                 checkValidate(true);
             } else {
                 updateCategory();
