@@ -52,6 +52,8 @@ import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentCreateNewAudioBinding;
 import t3h.android.elifeadmin.helper.DropdownListHelper;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
+import t3h.android.elifeadmin.helper.JWTHelper;
+import t3h.android.elifeadmin.helper.ReAuthHelper;
 import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
 import t3h.android.elifeadmin.models.Audio;
 import t3h.android.elifeadmin.models.DropdownItem;
@@ -391,18 +393,17 @@ public class CreateNewAudioFragment extends Fragment {
                 SharedPreferencesHelper.getRefreshToken(requireContext()));
         tokenViewModel.checkToken(token).observe(requireActivity(), result -> {
             binding.progressBar.setVisibility(View.GONE);
+            SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
             if (result != null) {
                 if (AppConstant.REFRESH_TOKEN_SUCCESSFULLY.equals(result.getMessage())) {
-                    // save access and refresh token
-                    SharedPreferences sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE);
                     SharedPreferencesHelper.saveToken(sharedPref, result);
-                    storeAudio();
-                } else {
-                    storeAudio();
                 }
             } else {
-                Toast.makeText(requireActivity(), AppConstant.SIGN_IN_AGAIN, Toast.LENGTH_SHORT).show();
+                String getPassword = JWTHelper.decoded(SharedPreferencesHelper.getRefreshToken(requireContext()));
+                String getEmail = FirebaseAuthHelper.getCurrentUser().getEmail();
+                ReAuthHelper.reAuth(getEmail, getPassword, sharedPref, requireActivity());
             }
+            storeAudio();
         });
     }
 

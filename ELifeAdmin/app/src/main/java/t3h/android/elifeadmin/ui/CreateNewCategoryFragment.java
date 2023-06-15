@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +23,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.google.firebase.auth.FirebaseUser;
-
 import t3h.android.elifeadmin.R;
 import t3h.android.elifeadmin.constant.AppConstant;
 import t3h.android.elifeadmin.databinding.FragmentCreateNewCategoryBinding;
 import t3h.android.elifeadmin.helper.DropdownListHelper;
 import t3h.android.elifeadmin.helper.FirebaseAuthHelper;
 import t3h.android.elifeadmin.helper.JWTHelper;
-import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
 import t3h.android.elifeadmin.helper.ReAuthHelper;
+import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
 import t3h.android.elifeadmin.models.Category;
 import t3h.android.elifeadmin.models.DropdownItem;
 import t3h.android.elifeadmin.models.Token;
@@ -185,21 +182,12 @@ public class CreateNewCategoryFragment extends Fragment {
                 if (AppConstant.REFRESH_TOKEN_SUCCESSFULLY.equals(result.getMessage())) {
                     SharedPreferencesHelper.saveToken(sharedPref, result);
                 }
-                storeCategory();
             } else {
                 String getPassword = JWTHelper.decoded(SharedPreferencesHelper.getRefreshToken(requireContext()));
                 String getEmail = FirebaseAuthHelper.getCurrentUser().getEmail();
-                ReAuthHelper reAuthHelper = new ReAuthHelper();
-                reAuthHelper.reAuth(requireActivity(), getEmail, getPassword, sharedPref, isSuccess -> {
-                    if (isSuccess) {
-                        Log.e("isSuccess", "true");
-                        storeCategory();
-                    } else {
-                        Log.e("isSuccess", "false");
-                        Toast.makeText(requireActivity(), AppConstant.SIGN_IN_AGAIN, Toast.LENGTH_LONG).show();
-                    }
-                });
+                ReAuthHelper.reAuth(getEmail, getPassword, sharedPref, requireActivity());
             }
+            storeCategory();
         });
     }
 
