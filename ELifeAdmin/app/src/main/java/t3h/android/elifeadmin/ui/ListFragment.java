@@ -32,6 +32,9 @@ public class ListFragment extends Fragment {
     private FragmentListBinding fragmentListBinding;
     private int position;
     private NavController navController;
+    private final ItemsListAdapter<Category> categoryAdapter = new ItemsListAdapter<>();
+    private final ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
+    private final ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
 
     public ListFragment() {
     }
@@ -58,6 +61,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        fragmentListBinding.searchEdt.setText("");
         initSearchLayout();
         fragmentListBinding.goToTopImageView.setOnClickListener(v -> fragmentListBinding.listRcv.smoothScrollToPosition(0));
     }
@@ -65,7 +69,6 @@ public class ListFragment extends Fragment {
     private void initItemsList() {
         switch (position) {
             case 0:
-                ItemsListAdapter<Category> categoryAdapter = new ItemsListAdapter<>();
                 CategoryViewModel categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
                 categoryViewModel.getAllList().observe(requireActivity(), categoryAdapter::setData);
                 fragmentListBinding.listRcv.setAdapter(categoryAdapter);
@@ -75,7 +78,6 @@ public class ListFragment extends Fragment {
                 );
                 break;
             case 1:
-                ItemsListAdapter<Topic> topicAdapter = new ItemsListAdapter<>();
                 TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
                 topicViewModel.getAllList().observe(requireActivity(), topicAdapter::setData);
                 fragmentListBinding.listRcv.setAdapter(topicAdapter);
@@ -84,7 +86,6 @@ public class ListFragment extends Fragment {
                         navigateToUpdateView(object, R.id.action_dashboardFragment_to_createNewTopicFragment)));
                 break;
             case 2:
-                ItemsListAdapter<Audio> audioAdapter = new ItemsListAdapter<>();
                 AudioViewModel audioViewModel = new ViewModelProvider(requireActivity()).get(AudioViewModel.class);
                 audioViewModel.getAllList().observe(requireActivity(), audioAdapter::setData);
                 fragmentListBinding.listRcv.setAdapter(audioAdapter);
@@ -93,6 +94,7 @@ public class ListFragment extends Fragment {
                         navigateToUpdateView(object, R.id.action_dashboardFragment_to_createNewAudioFragment)));
                 break;
         }
+        fragmentListBinding.listRcv.setHasFixedSize(true);
         fragmentListBinding.listRcv.setLayoutManager(new LinearLayoutManager(requireActivity()));
     }
 
@@ -101,98 +103,82 @@ public class ListFragment extends Fragment {
             if (fragmentListBinding.searchEdt.getVisibility() == View.VISIBLE) {
                 fragmentListBinding.searchEdt.setVisibility(View.GONE);
                 fragmentListBinding.searchImageView.setBackgroundResource(R.drawable.button_background);
+                resetSearchLayout();
             } else {
                 fragmentListBinding.searchEdt.setVisibility(View.VISIBLE);
+                fragmentListBinding.searchEdt.requestFocus();
                 fragmentListBinding.searchImageView.setBackgroundResource(R.drawable.pressed_button_background);
-
                 switch (position) {
                     case 0:
-                        CategoryViewModel categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
-                        ItemsListAdapter<Category> searchListAdapter = new ItemsListAdapter<>();
-                        fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                                searchListAdapter.cancelTimer();
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable editable) {
-                                categoryViewModel.getAllList().observe(requireActivity(), categories -> {
-                                    searchListAdapter.setData(categories);
-                                    searchListAdapter.searchList(editable.toString(), categories);
-                                });
-                                fragmentListBinding.listRcv.setAdapter(searchListAdapter);
-                                searchListAdapter.bindAdapter((model, view) -> bindCategoryItemByStatus(model, view));
-                                searchListAdapter.setOnItemListClickListener(object ->
-                                        navigateToUpdateView(object, R.id.action_dashboardFragment_to_createNewCategoryFragment)
-                                );
-                            }
-                        });
+                        loadCategoriesSearchList();
                         break;
                     case 1:
-                        TopicViewModel topicViewModel = new ViewModelProvider(requireActivity()).get(TopicViewModel.class);
-                        ItemsListAdapter<Topic> searchTopicsListAdapter = new ItemsListAdapter<>();
-                        fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                                searchTopicsListAdapter.cancelTimer();
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable editable) {
-                                topicViewModel.getAllList().observe(requireActivity(), topics -> {
-                                    searchTopicsListAdapter.setData(topics);
-                                    searchTopicsListAdapter.searchList(editable.toString(), topics);
-                                });
-                                fragmentListBinding.listRcv.setAdapter(searchTopicsListAdapter);
-                                searchTopicsListAdapter.bindAdapter((model, view) -> bindTopicItemByStatus(model, view));
-                                searchTopicsListAdapter.setOnItemListClickListener(object ->
-                                        navigateToUpdateView(object, R.id.action_dashboardFragment_to_createNewTopicFragment)
-                                );
-                            }
-                        });
+                        loadTopicsSearchList();
                         break;
                     case 2:
-                        AudioViewModel audioViewModel = new ViewModelProvider(requireActivity()).get(AudioViewModel.class);
-                        ItemsListAdapter<Audio> searchAudiosListAdapter = new ItemsListAdapter<>();
-                        fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                                searchAudiosListAdapter.cancelTimer();
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable editable) {
-                                audioViewModel.getAllList().observe(requireActivity(), audios -> {
-                                    searchAudiosListAdapter.setData(audios);
-                                    searchAudiosListAdapter.searchList(editable.toString(), audios);
-                                });
-                                fragmentListBinding.listRcv.setAdapter(searchAudiosListAdapter);
-                                searchAudiosListAdapter.bindAdapter((model, view) -> bindAudioItemByStatus(model, view));
-                                searchAudiosListAdapter.setOnItemListClickListener(object ->
-                                        navigateToUpdateView(object, R.id.action_dashboardFragment_to_createNewAudioFragment)
-                                );
-                            }
-                        });
+                        loadAudioSearchList();
                         break;
                 }
             }
         });
     }
 
+    private void loadCategoriesSearchList() {
+        fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                categoryAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                categoryAdapter.searchList(editable.toString());
+            }
+        });
+    }
+
+    private void loadTopicsSearchList() {
+        fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                topicAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                topicAdapter.searchList(editable.toString());
+            }
+        });
+    }
+
+    private void loadAudioSearchList() {
+        fragmentListBinding.searchEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                audioAdapter.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                audioAdapter.searchList(editable.toString());
+            }
+        });
+    }
+
     private void bindCategoryItemByStatus(Category model, ItemListLayoutBinding view) {
+        resetViewColor(view);
         if (model.getStatus() == 0) {
             bindViewColor(view);
         }
@@ -200,6 +186,7 @@ public class ListFragment extends Fragment {
     }
 
     private void bindTopicItemByStatus(Topic model, ItemListLayoutBinding view) {
+        resetViewColor(view);
         if (model.getStatus() == 0) {
             bindViewColor(view);
         }
@@ -207,15 +194,26 @@ public class ListFragment extends Fragment {
     }
 
     private void bindAudioItemByStatus(Audio model, ItemListLayoutBinding view) {
+        resetViewColor(view);
         if (model.getStatus() == 0) {
             bindViewColor(view);
         }
         view.itemName.setText(model.getTitle());
     }
 
+    private void resetViewColor(ItemListLayoutBinding view) {
+        view.itemName.setTextColor(getResources().getColor(R.color.black));
+        view.itemListLayout.setBackgroundResource(R.drawable.card_background);
+    }
+
     private void bindViewColor(ItemListLayoutBinding view) {
         view.itemName.setTextColor(getResources().getColor(R.color.dangerColor));
         view.itemListLayout.setBackgroundResource(R.drawable.border_red_background);
+    }
+
+    private void resetSearchLayout() {
+        fragmentListBinding.searchEdt.setText("");
+        initItemsList();
     }
 
     private void navigateToUpdateView(Object object, int actionId) {
