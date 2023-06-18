@@ -83,7 +83,7 @@ public class ItemsListAdapter<T> extends RecyclerView.Adapter<ItemsListAdapter.I
         }
     }
 
-    public void searchList(String keyword, List<T> modelList) {
+    public void searchList(String keyword) {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -92,7 +92,7 @@ public class ItemsListAdapter<T> extends RecyclerView.Adapter<ItemsListAdapter.I
                     data = dataSource;
                 } else {
                     List<T> temp = new ArrayList<>();
-                    for (T item : modelList) {
+                    for (T item : dataSource) {
                         if (item instanceof Category && ((Category) item).getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
                             temp.add(item);
                         } else if (item instanceof Topic && ((Topic) item).getName().toLowerCase().contains(keyword.trim().toLowerCase())) {
