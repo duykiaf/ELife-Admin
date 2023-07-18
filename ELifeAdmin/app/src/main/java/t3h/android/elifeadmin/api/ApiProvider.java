@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import t3h.android.elifeadmin.helper.SharedPreferencesHelper;
 
 public class ApiProvider {
-    public static final String BASE_URL = "http://192.168.1.6:3000";
+    public static final String BASE_URL = "http://192.168.1.8:3000";
     private static TokenApi tokenApi;
     private static CategoryApi categoryApi;
     private static TopicApi topicApi;
